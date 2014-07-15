@@ -48,29 +48,27 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 * @since 1.0
 		 *
 		 */
-		public static function instance() {
-			if ( ! isset ( self::$instance ) ) {
-				self::$instance = new self;
+		public static function get_instance() {
+			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof EDD_Per_Product_Emails ) ) {
+				self::$instance = new EDD_Per_Product_Emails;
+				self::$instance->setup_globals();
+				self::$instance->includes();
+				self::$instance->setup_actions();
+				self::$instance->licensing();
 			}
 
 			return self::$instance;
 		}
 
-
 		/**
-		 * Start your engines.
+		 * Constructor Function
 		 *
 		 * @since 1.0
-		 *
-		 * @return void
+		 * @access private
 		 */
-		public function __construct() {
-			$this->setup_globals();
-			$this->includes();
-			$this->setup_actions();
-			$this->licensing();
+		private function __construct() {
+			self::$instance = $this;
 		}
-
 
 		/**
 		 * Globals
@@ -250,7 +248,6 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 			add_submenu_page( 'edit.php?post_type=download', __( 'Per Product Emails', 'edd-ppe' ), __( 'Per Product Emails', 'edd-ppe' ), 'manage_shop_settings', 'edd-receipts', array( $this, 'admin_page') );
 		}
 
-
 		/**
 		 * Receipts page
 		 *
@@ -309,9 +306,29 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 	
 }
 
-
+/**
+ * Loads a single instance
+ *
+ * This follows the PHP singleton design pattern.
+ *
+ * Use this function like you would a global variable, except without needing
+ * to declare the global.
+ *
+ * @example <?php $edd_per_product_emails = edd_per_product_emails(); ?>
+ *
+ * @since 1.0
+ *
+ * @see EDD_Per_Product_Emails::get_instance()
+ *
+ * @return object Returns an instance of the EDD_Per_Product_Emails class
+ */
 function edd_per_product_emails() {
-	return EDD_Per_Product_Emails::instance();
+	return EDD_Per_Product_Emails::get_instance();
 }
 
-edd_per_product_emails();
+/**
+ * Loads plugin after all the others have loaded and have registered their hooks and filters
+ *
+ * @since 1.0.3
+*/
+add_action( 'plugins_loaded', 'edd_per_product_emails', apply_filters( 'edd_ppe_action_priority', 10 ) );

@@ -36,7 +36,7 @@ add_action( 'edd_complete_purchase', 'edd_ppe_trigger_purchase_receipt', 999, 1 
  */
 function edd_ppe_resend_custom_purchase_receipts( $data ) {
 	$purchase_id = $data['purchase_id'];
-	edd_ppe_email_custom_purchase_receipts( $purchase_id, false );
+	edd_ppe_email_custom_purchase_receipts( $purchase_id, false ); // doesn't send admin email
 }
 add_action( 'edd_email_links', 'edd_ppe_resend_custom_purchase_receipts', 9 );
 

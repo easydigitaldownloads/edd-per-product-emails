@@ -1,28 +1,54 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Easy Digital Downloads - Per Product Emails\n"
-"POT-Creation-Date: 2013-09-05 23:43+1200\n"
-"PO-Revision-Date: 2013-09-05 23:43+1200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2014-07-15 13:42+1200\n"
+"PO-Revision-Date: 2014-07-15 13:42+1200\n"
+"Last-Translator: Andrew Munro, Sumobi <andrew@sumobi.com>\n"
 "Language-Team: Sumobi <andrew@sumobi.com>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"X-Generator: Poedit 1.6.5\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../edd-per-product-emails.php:135 ../edd-per-product-emails.php:159
+#: ../edd-per-product-emails.php:202
+#, php-format
+msgid "You must install %sEasy Digital Downloads%s to use %s."
+msgstr ""
+
+#: ../edd-per-product-emails.php:206
+#, php-format
+msgid ""
+"%s requires Easy Digital Downloads Version 1.7 or greater. Please update "
+"Easy Digital Downloads."
+msgstr ""
+
+#: ../edd-per-product-emails.php:217
+msgid "Settings"
+msgstr ""
+
+#: ../edd-per-product-emails.php:235
+msgid "View more plugins for Easy Digital Downloads by Sumobi"
+msgstr ""
+
+#: ../edd-per-product-emails.php:235
+msgid "Author's EDD plugins"
+msgstr ""
+
+#: ../edd-per-product-emails.php:250 ../edd-per-product-emails.php:274
 #: ../includes/admin-settings.php:17
 msgid "Per Product Emails"
 msgstr ""
 
-#: ../edd-per-product-emails.php:159 ../includes/post-types.php:17
+#: ../edd-per-product-emails.php:274 ../includes/post-types.php:17
 msgid "Add New"
 msgstr ""
 
-#: ../edd-per-product-emails.php:162
+#: ../edd-per-product-emails.php:277
 msgid "Search"
 msgstr ""
 
@@ -163,15 +189,6 @@ msgstr ""
 msgid "No emails found."
 msgstr ""
 
-#: ../includes/EDD_License_Handler.php:112
-#, php-format
-msgid "%1$s License Key"
-msgstr ""
-
-#: ../includes/EDD_License_Handler.php:218
-msgid "Deactivate License"
-msgstr ""
-
 #: ../includes/edit-receipt.php:12
 msgid "Something went wrong."
 msgstr ""
@@ -192,25 +209,25 @@ msgstr ""
 msgid "Update Email"
 msgstr ""
 
-#: ../includes/email-functions.php:74 ../includes/email-functions.php:197
+#: ../includes/email-functions.php:86 ../includes/email-functions.php:209
 msgid "Dear"
 msgstr ""
 
-#: ../includes/email-functions.php:75 ../includes/email-functions.php:198
+#: ../includes/email-functions.php:87 ../includes/email-functions.php:210
 msgid ""
 "Thank you for purchasing {download_name}. Please click on the link(s) below "
 "to download your files."
 msgstr ""
 
-#: ../includes/email-functions.php:79
+#: ../includes/email-functions.php:91
 msgid "Purchase Receipt - {download_name}"
 msgstr ""
 
-#: ../includes/email-functions.php:194
+#: ../includes/email-functions.php:206
 msgid "Thanks for purchasing {download_name}"
 msgstr ""
 
-#: ../includes/email-functions.php:271
+#: ../includes/email-functions.php:283
 #, php-format
 msgid "The %s name"
 msgstr ""
