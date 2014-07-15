@@ -27,6 +27,18 @@ function edd_ppe_trigger_purchase_receipt( $payment_id ) {
 }
 add_action( 'edd_complete_purchase', 'edd_ppe_trigger_purchase_receipt', 999, 1 );	
 
+/**
+ * Resend the custom Email Purchase Receipts. (This can be done from the Payment History page)
+ *
+ * @since 1.0.3
+ * @param array $data Payment Data
+ * @return void
+ */
+function edd_ppe_resend_custom_purchase_receipts( $data ) {
+	$purchase_id = $data['purchase_id'];
+	edd_ppe_email_custom_purchase_receipts( $purchase_id, false );
+}
+add_action( 'edd_email_links', 'edd_ppe_resend_custom_purchase_receipts', 9 );
 
 /**
  * Email the custom download link(s) and payment confirmation to the buyer in a

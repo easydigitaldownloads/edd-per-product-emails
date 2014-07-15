@@ -1,7 +1,7 @@
 == Changelog ==
 
 = 1.0.3 =
-* Fix: 
+* New: Custom emails are now sent when resending the purchase receipt from the Payment History 
 
 = 1.0.2 =
 * Fix: Bug with license key activation.
