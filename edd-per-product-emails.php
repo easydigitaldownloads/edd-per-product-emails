@@ -15,7 +15,29 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 
 	class EDD_Per_Product_Emails {
 
+		/**
+		 * Holds the instance
+		 *
+		 * Ensures that only one instance exists in memory at any one
+		 * time and it also prevents needing to define globals all over the place.
+		 *
+		 * TL;DR This is a static property property that holds the singleton instance.
+		 *
+		 * @var object
+		 * @static
+		 * @since 1.0
+		 */
 		private static $instance;
+
+		/**
+		 * Plugin Version
+		 */
+		private $version = '1.0.3';
+
+		/**
+		 * Plugin Title
+		 */
+		public $title = 'EDD Per Product Emails';
 
 		/**
 		 * Main Instance
@@ -59,8 +81,6 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 */
 		private function setup_globals() {
 
-			$this->version    = '1.0.3';
-
 			// paths
 			$this->file         = __FILE__;
 			$this->basename     = apply_filters( 'edd_ppe_plugin_basenname', plugin_basename( $this->file ) );
@@ -83,9 +103,12 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		private function setup_actions() {
 			global $edd_options;
 
+			add_action( 'admin_init', array( $this, 'activation' ) );
 			add_action( 'init', array( $this, 'textdomain' ) );
 			add_action( 'admin_menu', array( $this, 'add_submenu_page'), 10 );
 			add_action( 'admin_print_styles', array( $this, 'admin_css'), 100 );
+
+			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta' ), 10, 2 );
 
 			do_action( 'edd_ppe_setup_actions' );
 		}
@@ -137,6 +160,86 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 			do_action( 'edd_ppe_include_admin_files' );
 		}
 
+		/**
+		 * Activation function fires when the plugin is activated.
+		 *
+		 * This function is fired when the activation hook is called by WordPress,
+		 * it flushes the rewrite rules and disables the plugin if EDD isn't active
+		 * and throws an error.
+		 *
+		 * @since 1.0
+		 * @access public
+		 *
+		 * @return void
+		 */
+		public function activation() {
+			if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+				// is this plugin active?
+				if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) {
+					// deactivate the plugin
+			 		deactivate_plugins( plugin_basename( __FILE__ ) );
+			 		// unset activation notice
+			 		unset( $_GET[ 'activate' ] );
+			 		// display notice
+			 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+				}
+
+			}
+			else {
+				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 2 );
+			}
+		}
+
+		/**
+		 * Admin notices
+		 *
+		 * @since 1.0.3
+		*/
+		public function admin_notices() {
+			$edd_plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/easy-digital-downloads/easy-digital-downloads.php', false, false );
+
+			if ( ! is_plugin_active('easy-digital-downloads/easy-digital-downloads.php') ) {
+				echo '<div class="error"><p>' . sprintf( __( 'You must install %sEasy Digital Downloads%s to use %s.', 'edd-ppe' ), '<a href="http://easydigitaldownloads.com" title="Easy Digital Downloads" target="_blank">', '</a>', $this->title ) . '</p></div>';
+			}
+
+			if ( $edd_plugin_data['Version'] < '1.7' ) {
+				echo '<div class="error"><p>' . sprintf( __( '%s requires Easy Digital Downloads Version 1.7 or greater. Please update Easy Digital Downloads.', 'edd-ppe' ), $this->title ) . '</p></div>';
+			}
+		}
+
+		/**
+		 * Plugin settings link
+		 *
+		 * @since 1.0
+		*/
+		public function settings_link( $links ) {
+			$plugin_links = array(
+				'<a href="' . admin_url( 'edit.php?post_type=download&page=edd-settings&tab=extensions' ) . '">' . __( 'Settings', 'edd-ppe' ) . '</a>',
+			);
+
+			return array_merge( $plugin_links, $links );
+		}
+
+		/**
+		 * Modify plugin metalinks
+		 *
+		 * @access      public
+		 * @since       1.0.3
+		 * @param       array $links The current links array
+		 * @param       string $file A specific plugin table entry
+		 * @return      array $links The modified links array
+		 */
+		public function plugin_meta( $links, $file ) {
+		    if ( $file == plugin_basename( __FILE__ ) ) {
+		        $plugins_link = array(
+		            '<a title="'. __( 'View more plugins for Easy Digital Downloads by Sumobi', 'edd-ppe' ) .'" href="https://easydigitaldownloads.com/blog/author/andrewmunro/?ref=166" target="_blank">' . __( 'Author\'s EDD plugins', 'edd-ppe' ) . '</a>'
+		        );
+
+		        $links = array_merge( $links, $plugins_link );
+		    }
+
+		    return $links;
+		}
 
 		/**
 		 * Add submenu page
