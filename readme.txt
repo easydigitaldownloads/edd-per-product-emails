@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 1.0.5 =
+* Fix: email tags not showing properly in custom emails
+* New: edd_ppe_email_heading filter for showing the download's name as the email heading, similar to the default EDD purchase receipt. Example add_filter( 'edd_ppe_email_heading', '__return_true' );
+* Tweak: Optimized email function code
+
 = 1.0.4 =
 * Tweak: Now uses EDD's email class introduced in EDD v2.1 for custom emails and test emails
 * Tweak: Better activation class
