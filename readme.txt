@@ -1,5 +1,10 @@
 == Changelog ==
 
+= 1.0.4 =
+* Tweak: Now uses EDD's email class introduced in EDD v2.1 for custom emails and test emails
+* Tweak: Better activation class
+* Tweak: Better handling of language files
+
 = 1.0.3 =
 * New: Custom emails are now sent when resending the purchase receipt from the Payment History 
 

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Easy Digital Downloads - Per Product Emails\n"
-"POT-Creation-Date: 2014-07-15 13:42+1200\n"
-"PO-Revision-Date: 2014-07-15 13:42+1200\n"
+"POT-Creation-Date: 2014-09-23 22:21+1200\n"
+"PO-Revision-Date: 2014-09-23 22:21+1200\n"
 "Last-Translator: Andrew Munro, Sumobi <andrew@sumobi.com>\n"
 "Language-Team: Sumobi <andrew@sumobi.com>\n"
 "Language: en_US\n"
@@ -15,40 +15,28 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../edd-per-product-emails.php:202
-#, php-format
-msgid "You must install %sEasy Digital Downloads%s to use %s."
-msgstr ""
-
-#: ../edd-per-product-emails.php:206
-#, php-format
-msgid ""
-"%s requires Easy Digital Downloads Version 1.7 or greater. Please update "
-"Easy Digital Downloads."
-msgstr ""
-
-#: ../edd-per-product-emails.php:217
+#: ../edd-per-product-emails.php:191
 msgid "Settings"
 msgstr ""
 
-#: ../edd-per-product-emails.php:235
+#: ../edd-per-product-emails.php:209
 msgid "View more plugins for Easy Digital Downloads by Sumobi"
 msgstr ""
 
-#: ../edd-per-product-emails.php:235
+#: ../edd-per-product-emails.php:209
 msgid "Author's EDD plugins"
 msgstr ""
 
-#: ../edd-per-product-emails.php:250 ../edd-per-product-emails.php:274
+#: ../edd-per-product-emails.php:224 ../edd-per-product-emails.php:247
 #: ../includes/admin-settings.php:17
 msgid "Per Product Emails"
 msgstr ""
 
-#: ../edd-per-product-emails.php:274 ../includes/post-types.php:17
+#: ../edd-per-product-emails.php:247 ../includes/post-types.php:17
 msgid "Add New"
 msgstr ""
 
-#: ../edd-per-product-emails.php:277
+#: ../edd-per-product-emails.php:250
 msgid "Search"
 msgstr ""
 
@@ -143,6 +131,20 @@ msgid ""
 "purchased that do not have custom emails configured."
 msgstr ""
 
+#: ../includes/class-activation.php:47
+msgid "This plugin"
+msgstr ""
+
+#: ../includes/class-activation.php:88
+#, php-format
+msgid " requires %sEasy Digital Downloads%s. Please activate it to continue."
+msgstr ""
+
+#: ../includes/class-activation.php:90
+#, php-format
+msgid " requires %sEasy Digital Downloads%s. Please install it to continue."
+msgstr ""
+
 #: ../includes/class-receipts-table.php:124
 msgid "All"
 msgstr ""
@@ -209,11 +211,11 @@ msgstr ""
 msgid "Update Email"
 msgstr ""
 
-#: ../includes/email-functions.php:86 ../includes/email-functions.php:209
+#: ../includes/email-functions.php:86 ../includes/email-functions.php:193
 msgid "Dear"
 msgstr ""
 
-#: ../includes/email-functions.php:87 ../includes/email-functions.php:210
+#: ../includes/email-functions.php:87 ../includes/email-functions.php:194
 msgid ""
 "Thank you for purchasing {download_name}. Please click on the link(s) below "
 "to download your files."
@@ -223,11 +225,11 @@ msgstr ""
 msgid "Purchase Receipt - {download_name}"
 msgstr ""
 
-#: ../includes/email-functions.php:206
+#: ../includes/email-functions.php:190
 msgid "Thanks for purchasing {download_name}"
 msgstr ""
 
-#: ../includes/email-functions.php:283
+#: ../includes/email-functions.php:271
 #, php-format
 msgid "The %s name"
 msgstr ""

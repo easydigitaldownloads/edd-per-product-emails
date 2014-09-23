@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - Per Product Emails
 Plugin URI: http://sumobi.com/shop/per-product-emails/
 Description: Custom purchase confirmation emails for your products
-Version: 1.0.3
+Version: 1.0.4
 Author: Andrew Munro, Sumobi
 Author URI: http://sumobi.com/
 */
@@ -32,7 +32,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.0.3';
+		private $version = '1.0.4';
 
 		/**
 		 * Plugin Title
@@ -55,6 +55,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 				self::$instance->includes();
 				self::$instance->setup_actions();
 				self::$instance->licensing();
+				self::$instance->load_textdomain();
 			}
 
 			return self::$instance;
@@ -99,14 +100,12 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 * @return void
 		 */
 		private function setup_actions() {
-			global $edd_options;
 
-			add_action( 'admin_init', array( $this, 'activation' ) );
-			add_action( 'init', array( $this, 'textdomain' ) );
 			add_action( 'admin_menu', array( $this, 'add_submenu_page'), 10 );
 			add_action( 'admin_print_styles', array( $this, 'admin_css'), 100 );
 
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta' ), 10, 2 );
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 2 );
 
 			do_action( 'edd_ppe_setup_actions' );
 		}
@@ -124,14 +123,37 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		}
 
 		/**
-		 * Internationalization
+		 * Loads the plugin language files
 		 *
-		 * @since 1.0
+		 * @access public
+		 * @since 1.0.4
+		 * @return void
 		 */
-		function textdomain() {
-			load_plugin_textdomain( 'edd-ppe', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-		}
+		public function load_textdomain() {
 
+			// Set filter for plugin's languages directory
+			$lang_dir = dirname( plugin_basename( __FILE__ ) ) . '/languages/';
+			$lang_dir = apply_filters( 'edd_ppe_languages_directory', $lang_dir );
+
+			// Traditional WordPress plugin locale filter
+			$locale        = apply_filters( 'plugin_locale',  get_locale(), 'edd-ppe' );
+			$mofile        = sprintf( '%1$s-%2$s.mo', 'edd-ppe', $locale );
+
+			// Setup paths to current locale file
+			$mofile_local  = $lang_dir . $mofile;
+			$mofile_global = WP_LANG_DIR . '/edd-ppe/' . $mofile;
+
+			if ( file_exists( $mofile_global ) ) {
+				// Look in global /wp-content/languages/edd-ppe/ folder
+				load_textdomain( 'edd-ppe', $mofile_global );
+			} elseif ( file_exists( $mofile_local ) ) {
+				// Look in local /wp-content/plugins/edd-ppe/languages/ folder
+				load_textdomain( 'edd-ppe', $mofile_local );
+			} else {
+				// Load the default language files
+				load_plugin_textdomain( 'edd-ppe', false, $lang_dir );
+			}
+		}
 
 		/**
 		 * Include required files.
@@ -156,53 +178,6 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 			require( $this->includes_dir . 'post-types.php' );
 
 			do_action( 'edd_ppe_include_admin_files' );
-		}
-
-		/**
-		 * Activation function fires when the plugin is activated.
-		 *
-		 * This function is fired when the activation hook is called by WordPress,
-		 * it flushes the rewrite rules and disables the plugin if EDD isn't active
-		 * and throws an error.
-		 *
-		 * @since 1.0
-		 * @access public
-		 *
-		 * @return void
-		 */
-		public function activation() {
-			if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
-				// is this plugin active?
-				if ( is_plugin_active( plugin_basename( __FILE__ ) ) ) {
-					// deactivate the plugin
-			 		deactivate_plugins( plugin_basename( __FILE__ ) );
-			 		// unset activation notice
-			 		unset( $_GET[ 'activate' ] );
-			 		// display notice
-			 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
-				}
-
-			}
-			else {
-				add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 2 );
-			}
-		}
-
-		/**
-		 * Admin notices
-		 *
-		 * @since 1.0.3
-		*/
-		public function admin_notices() {
-			$edd_plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/easy-digital-downloads/easy-digital-downloads.php', false, false );
-
-			if ( ! is_plugin_active('easy-digital-downloads/easy-digital-downloads.php') ) {
-				echo '<div class="error"><p>' . sprintf( __( 'You must install %sEasy Digital Downloads%s to use %s.', 'edd-ppe' ), '<a href="http://easydigitaldownloads.com" title="Easy Digital Downloads" target="_blank">', '</a>', $this->title ) . '</p></div>';
-			}
-
-			if ( $edd_plugin_data['Version'] < '1.7' ) {
-				echo '<div class="error"><p>' . sprintf( __( '%s requires Easy Digital Downloads Version 1.7 or greater. Please update Easy Digital Downloads.', 'edd-ppe' ), $this->title ) . '</p></div>';
-			}
 		}
 
 		/**
@@ -244,7 +219,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 *
 		 * @since 1.0
 		*/
-		function add_submenu_page() {
+		public function add_submenu_page() {
 			add_submenu_page( 'edit.php?post_type=download', __( 'Per Product Emails', 'edd-ppe' ), __( 'Per Product Emails', 'edd-ppe' ), 'manage_shop_settings', 'edd-receipts', array( $this, 'admin_page') );
 		}
 
@@ -253,7 +228,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 *
 		 * @since 1.0
 		*/
-		function admin_page() {
+		public function admin_page() {
 
 			if ( isset( $_GET['edd-action'] ) && $_GET['edd-action'] == 'edit_receipt' ) {
 				require_once $this->includes_dir . 'edit-receipt.php';
@@ -291,7 +266,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 *
 		 * @since 1.0
 		*/
-		function admin_css() { 
+		public function admin_css() { 
 
 			global $pagenow, $typenow;
 
@@ -323,12 +298,15 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
  * @return object Returns an instance of the EDD_Per_Product_Emails class
  */
 function edd_per_product_emails() {
-	return EDD_Per_Product_Emails::get_instance();
-}
+    if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
+        if ( ! class_exists( 'EDD_Extension_Activation' ) ) {
+            require_once 'includes/class-activation.php';
+        }
 
-/**
- * Loads plugin after all the others have loaded and have registered their hooks and filters
- *
- * @since 1.0.3
-*/
+        $activation = new EDD_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
+        $activation = $activation->run();
+    } else {
+        return EDD_Per_Product_Emails::get_instance();
+    }
+}
 add_action( 'plugins_loaded', 'edd_per_product_emails', apply_filters( 'edd_ppe_action_priority', 10 ) );
