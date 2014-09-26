@@ -1,5 +1,8 @@
 == Changelog ==
 
+= 1.0.6 =
+* Fix: Added backwards compatibility for olders EDD versions that aren't using the new EDD email class 
+
 = 1.0.5 =
 * Fix: email tags not showing properly in custom emails
 * New: edd_ppe_email_heading filter for showing the download's name as the email heading, similar to the default EDD purchase receipt. Example add_filter( 'edd_ppe_email_heading', '__return_true' );

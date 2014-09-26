@@ -87,33 +87,66 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 		$default_email_body .= "{download_list}\n\n";
 		$default_email_body .= "{sitename}";
 
-		// get our subject
-		$subject = apply_filters( 'edd_ppe_purchase_subject', $receipt->post_excerpt ? wp_strip_all_tags( $receipt->post_excerpt, true ) : __( 'Purchase Receipt - {download_name}', 'edd-ppe' ), $payment_id );
-		
-		// run subject through the plugin's custom email tag function
-		// this runs before so apostrophe's can correctly be replaced when {sitename} is used in the subject. This will eventually be fixed in EDD core
-		$subject = edd_ppe_email_template_tags( $subject, $product_id );
+		// use new EDD 2.1 Email class
+		if ( class_exists( 'EDD_Emails' ) ) {
 
-		// run subject through the standard EDD email tag function
-		$subject = edd_do_email_tags( $subject, $payment_id );
+			// get our subject
+			$subject = apply_filters( 'edd_ppe_purchase_subject', $receipt->post_excerpt ? wp_strip_all_tags( $receipt->post_excerpt, true ) : __( 'Purchase Receipt - {download_name}', 'edd-ppe' ), $payment_id );
+			
+			// run subject through the plugin's custom email tag function
+			// this runs before so apostrophe's can correctly be replaced when {sitename} is used in the subject. This will eventually be fixed in EDD core
+			$subject = edd_ppe_email_template_tags( $subject, $product_id );
 
-		// message
-		$message = apply_filters( 'edd_ppe_purchase_body', $receipt->post_content ? $receipt->post_content : $default_email_body );
-		
-		// run our message through the standard EDD email tag function
-		$message = apply_filters( 'edd_purchase_receipt', edd_do_email_tags( $message, $payment_id ), $payment_id, $payment_data );
-		
-		// run the message through the plugin's custom email tag function
-		$message = edd_ppe_email_template_tags( $message, $product_id );
+			// run subject through the standard EDD email tag function
+			$subject = edd_do_email_tags( $subject, $payment_id );
 
-		// add download name as email heading. Off by default
-		// will introduce a checkbox in admin to turn all headings on rather than turn them on now which may mess up emails
-		if ( apply_filters( 'edd_ppe_email_heading', false ) ) {
-			EDD()->emails->__set( 'heading', get_the_title( $product_id ) );
+			// message
+			$message = apply_filters( 'edd_ppe_purchase_body', $receipt->post_content ? $receipt->post_content : $default_email_body );
+			
+			// run our message through the standard EDD email tag function
+			$message = apply_filters( 'edd_purchase_receipt', edd_do_email_tags( $message, $payment_id ), $payment_id, $payment_data );
+			
+			// run the message through the plugin's custom email tag function
+			$message = edd_ppe_email_template_tags( $message, $product_id );
+
+			// add download name as email heading. Off by default
+			// will introduce a checkbox in admin to turn all headings on rather than turn them on now which may mess up emails
+			if ( apply_filters( 'edd_ppe_email_heading', false ) ) {
+				EDD()->emails->__set( 'heading', get_the_title( $product_id ) );
+			}
+			
+			// send an email for each custom email
+			EDD()->emails->send( $email, $subject, $message );
+
+		} else {
+			// support older EDD versions where the EDD Email Class does not exist
+			$subject = apply_filters( 'edd_ppe_purchase_subject', $receipt->post_excerpt ? wp_strip_all_tags( $receipt->post_excerpt, true ) : __( 'Purchase Receipt - {download_name}', 'edd-ppe' ), $payment_id );
+
+			$body = apply_filters( 'edd_ppe_purchase_body', $receipt->post_content ? $receipt->post_content : $default_email_body );
+			$body = edd_ppe_email_template_tags( $body, $product_id );
+
+			$subject = edd_email_template_tags( $subject, $payment_data, $payment_id );
+			$subject = edd_ppe_email_template_tags( $subject, $product_id );
+
+			$message = edd_get_email_body_header();
+			$message .= apply_filters( 'edd_purchase_receipt', edd_email_template_tags( $body, $payment_data, $payment_id ), $payment_id, $payment_data );
+			$message .= edd_get_email_body_footer();
+
+			$from_name = isset( $edd_options['from_name'] ) ? $edd_options['from_name'] : get_bloginfo('name');
+			$from_email = isset( $edd_options['from_email'] ) ? $edd_options['from_email'] : get_option('admin_email');
+
+			$headers = "From: " . stripslashes_deep( html_entity_decode( $from_name, ENT_COMPAT, 'UTF-8' ) ) . " <$from_email>\r\n";
+			$headers .= "Reply-To: ". $from_email . "\r\n";
+			//$headers .= "MIME-Version: 1.0\r\n";
+			$headers .= "Content-Type: text/html; charset=utf-8\r\n";
+			$headers = apply_filters( 'edd_receipt_headers', $headers, $payment_id, $payment_data );
+
+			// Allow add-ons to add file attachments
+			$attachments = apply_filters( 'edd_receipt_attachments', array(), $payment_id, $payment_data );
+
+			wp_mail( $email, $subject, $message, $headers, $attachments );
+
 		}
-
-		// send an email for each custom email
-		EDD()->emails->send( $email, $subject, $message );
 
 	}
 
@@ -194,31 +227,64 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 	$default_email_body .= __( "Thank you for purchasing {download_name}. Please click on the link(s) below to download your files.", "edd-ppe" ) . "\n\n";
 	$default_email_body .= "{download_list}\n\n";
 	$default_email_body .= "{sitename}";
-
-	// we're on the main screen of edd receipts, get relevant subject and body for test email
-	if ( isset( $_GET['page'] ) && 'edd-receipts' == $_GET['page'] && 'download' == $typenow && in_array( $pagenow, array( 'edit.php' ) ) ) {
-		$subject = $receipt->post_excerpt ? $receipt->post_excerpt : $default_email_subject;
-		$body = $receipt->post_content ? $receipt->post_content : $default_email_body;	
-	}
 	
-	// run subject through email_preview_subject_template_tags() function
-	$subject = apply_filters( 'edd_ppe_purchase_receipt_subject', edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ), 0, array() );
-
-	// run subject through the standard EDD email tag function
-	$subject = edd_do_email_tags( $subject, 0 );
-
-	// message
-	$message = apply_filters( 'edd_ppe_purchase_body', $receipt->post_content ? $receipt->post_content : $default_email_body );
-	$message = edd_email_preview_template_tags( $body, 0 );
 
 
-	// add download name as email heading. Off by default
-	// will introduce a checkbox in admin to turn all headings on rather than turn them on now which may mess up emails
-	if ( apply_filters( 'edd_ppe_email_heading', false ) ) {
-		EDD()->emails->__set( 'heading', get_the_title( $product_id ) );
+	// use new EDD 2.1 Email class
+	if ( class_exists( 'EDD_Emails' ) ) {
+
+		// we're on the main screen of edd receipts, get relevant subject and body for test email
+		if ( isset( $_GET['page'] ) && 'edd-receipts' == $_GET['page'] && 'download' == $typenow && in_array( $pagenow, array( 'edit.php' ) ) ) {
+			$subject = $receipt->post_excerpt ? $receipt->post_excerpt : $default_email_subject;
+			$body = $receipt->post_content ? $receipt->post_content : $default_email_body;	
+		}
+		
+		// run subject through email_preview_subject_template_tags() function
+		$subject = apply_filters( 'edd_ppe_purchase_receipt_subject', edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ), 0, array() );
+
+		// run subject through the standard EDD email tag function
+		$subject = edd_do_email_tags( $subject, 0 );
+
+		// message
+		$message = apply_filters( 'edd_ppe_purchase_body', $receipt->post_content ? $receipt->post_content : $default_email_body );
+		$message = edd_email_preview_template_tags( $body, 0 );
+
+		// add download name as email heading. Off by default
+		// will introduce a checkbox in admin to turn all headings on rather than turn them on now which may mess up emails
+		if ( apply_filters( 'edd_ppe_email_heading', false ) ) {
+			EDD()->emails->__set( 'heading', get_the_title( $product_id ) );
+		}
+		
+		EDD()->emails->send( edd_get_admin_notice_emails(), $subject, $message );
+
+	} else {
+		// we're on the main screen of edd receipts, get relevant subject and body for test email
+		if ( isset( $_GET['page'] ) && 'edd-receipts' == $_GET['page'] && 'download' == $typenow && in_array( $pagenow, array( 'edit.php' ) ) ) {
+			$subject = $receipt->post_excerpt ? $receipt->post_excerpt : $default_email_subject;
+			$body = $receipt->post_content ? $receipt->post_content : $default_email_body;	
+		}
+		
+		// run subject through email_preview_subject_template_tags() function
+		$subject = apply_filters( 'edd_ppe_purchase_receipt_subject', edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ), 0, array() );
+
+		$message = edd_get_email_body_header();
+
+		// will remove the edd_email_preview_templage_tags() function when new EDD version is released
+		$message .= apply_filters( 'edd_purchase_receipt', function_exists( 'edd_email_preview_template_tags' ) ? edd_email_preview_template_tags( $body ) : edd_email_preview_templage_tags( $body ), null, null );
+		$message .= edd_get_email_body_footer();
+
+		$from_name = isset( $edd_options['from_name'] ) ? $edd_options['from_name'] : get_bloginfo('name');
+		$from_email = isset( $edd_options['from_email'] ) ? $edd_options['from_email'] : get_option('admin_email');
+
+		$headers = "From: " . stripslashes_deep( html_entity_decode( $from_name, ENT_COMPAT, 'UTF-8' ) ) . " <$from_email>\r\n";
+		$headers .= "Reply-To: ". $from_email . "\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=utf-8\r\n";
+		$headers = apply_filters( 'edd_test_purchase_headers', $headers );
+
+		wp_mail( edd_get_admin_notice_emails(), $subject, $message, $headers );
 	}
 
-	EDD()->emails->send( edd_get_admin_notice_emails(), $subject, $message );
 }
 
 

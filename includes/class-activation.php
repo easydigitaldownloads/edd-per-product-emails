@@ -85,9 +85,9 @@ class EDD_Extension_Activation {
      */
     public function missing_edd_notice() {
         if ( $this->has_edd ) {
-            echo '<div class="error"><p>' . $this->plugin_name . sprintf( __( ' requires %sEasy Digital Downloads%s. Please activate it to continue.', 'edd-ppe' ), '<a href="https://easydigitaldownloads.com/?ref=166" title="Easy Digital Downloads" target="_blank">', '</a>' ) . '</p></div>';
+            echo '<div class="error"><p>' . $this->plugin_name . sprintf( __( ' requires %sEasy Digital Downloads%s. Please activate it to continue.', 'edd-ppe' ), '<a href="https://easydigitaldownloads.com/" title="Easy Digital Downloads" target="_blank">', '</a>' ) . '</p></div>';
         } else {
-            echo '<div class="error"><p>' . $this->plugin_name . sprintf( __( ' requires %sEasy Digital Downloads%s. Please install it to continue.', 'edd-ppe' ), '<a href="https://easydigitaldownloads.com/?ref=166" title="Easy Digital Downloads" target="_blank">', '</a>' ) . '</p></div>';
+            echo '<div class="error"><p>' . $this->plugin_name . sprintf( __( ' requires %sEasy Digital Downloads%s. Please install it to continue.', 'edd-ppe' ), '<a href="https://easydigitaldownloads.com/" title="Easy Digital Downloads" target="_blank">', '</a>' ) . '</p></div>';
         }
     }
 }
