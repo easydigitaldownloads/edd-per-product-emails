@@ -1,4 +1,15 @@
+=== Easy Digital Downloads - Per Product Emails ===
+
+Plugin URI: http://sumobi.com/shop/easy-digital-downloads-per-product-emails/
+Author: Andrew Munro, Sumobi
+Author URI: http://sumobi.com/
+
+Custom purchase confirmation emails for your products
+
 == Changelog ==
+
+= 1.0.7 =
+* Fix: Plugin became deactivated when EDD was updated
 
 = 1.0.6 =
 * Fix: Added backwards compatibility for olders EDD versions that aren't using the new EDD email class 

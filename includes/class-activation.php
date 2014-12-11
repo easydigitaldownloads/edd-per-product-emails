@@ -8,7 +8,7 @@
 
 
 // Exit if accessed directly
-if( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 /**
@@ -41,15 +41,15 @@ class EDD_Extension_Activation {
         $this->plugin_file = $plugin_file;
 
         // Set plugin name
-        if( isset( $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] ) ) {
+        if ( isset( $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] ) ) {
             $this->plugin_name = str_replace( 'Easy Digital Downloads - ', '', $plugins[$this->plugin_path . '/' . $this->plugin_file]['Name'] );
         } else {
             $this->plugin_name = __( 'This plugin', 'edd' );
         }
 
         // Is EDD installed?
-        foreach( $plugins as $plugin_path => $plugin ) {
-            if( $plugin['Name'] == 'Easy Digital Downloads' ) {
+        foreach ( $plugins as $plugin_path => $plugin ) {
+            if ( $plugin['Name'] == 'Easy Digital Downloads' ) {
                 $this->has_edd = true;
                 break;
             }
@@ -65,13 +65,6 @@ class EDD_Extension_Activation {
      * @return      void
      */
     public function run() {
-        // We need plugin.php!
-        require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-        // Deactivate this plugin
-        deactivate_plugins( $this->plugin_path . '/' . $this->plugin_file );
-        unset( $_GET[ 'activate' ] );
-
         // Display notice
         add_action( 'admin_notices', array( $this, 'missing_edd_notice' ) );
     }

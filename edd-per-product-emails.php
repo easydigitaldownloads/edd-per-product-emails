@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Easy Digital Downloads - Per Product Emails
-Plugin URI: http://sumobi.com/shop/per-product-emails/
+Plugin URI: http://sumobi.com/shop/easy-digital-downloads-per-product-emails/
 Description: Custom purchase confirmation emails for your products
-Version: 1.0.6
+Version: 1.0.7
 Author: Andrew Munro, Sumobi
 Author URI: http://sumobi.com/
 */
@@ -32,7 +32,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.0.6';
+		private $version = '1.0.7';
 
 		/**
 		 * Plugin Title
@@ -275,38 +275,43 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 				return;
 			?>
 			<style>.quicktags-toolbar input{width: auto;}</style>
-		<?php }
+			<?php 
+		}
 
 	}
 	
-}
+	/**
+	 * Loads a single instance
+	 *
+	 * This follows the PHP singleton design pattern.
+	 *
+	 * Use this function like you would a global variable, except without needing
+	 * to declare the global.
+	 *
+	 * @example <?php $edd_per_product_emails = edd_per_product_emails(); ?>
+	 *
+	 * @since 1.0
+	 *
+	 * @see EDD_Per_Product_Emails::get_instance()
+	 *
+	 * @return object Returns an instance of the EDD_Per_Product_Emails class
+	 */
+	function edd_per_product_emails() {
 
-/**
- * Loads a single instance
- *
- * This follows the PHP singleton design pattern.
- *
- * Use this function like you would a global variable, except without needing
- * to declare the global.
- *
- * @example <?php $edd_per_product_emails = edd_per_product_emails(); ?>
- *
- * @since 1.0
- *
- * @see EDD_Per_Product_Emails::get_instance()
- *
- * @return object Returns an instance of the EDD_Per_Product_Emails class
- */
-function edd_per_product_emails() {
-    if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
-        if ( ! class_exists( 'EDD_Extension_Activation' ) ) {
-            require_once 'includes/class-activation.php';
-        }
+	    if ( ! class_exists( 'Easy_Digital_Downloads' ) ) {
 
-        $activation = new EDD_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
-        $activation = $activation->run();
-    } else {
-        return EDD_Per_Product_Emails::get_instance();
-    }
+	        if ( ! class_exists( 'EDD_Extension_Activation' ) ) {
+	            require_once 'includes/class-activation.php';
+	        }
+
+	        $activation = new EDD_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
+	        $activation = $activation->run();
+	        return EDD_Per_Product_Emails::get_instance();
+	        
+	    } else {
+	        return EDD_Per_Product_Emails::get_instance();
+	    }
+	}
+	add_action( 'plugins_loaded', 'edd_per_product_emails', apply_filters( 'edd_ppe_action_priority', 10 ) );
+
 }
-add_action( 'plugins_loaded', 'edd_per_product_emails', apply_filters( 'edd_ppe_action_priority', 10 ) );
