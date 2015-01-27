@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - Per Product Emails
 Plugin URI: http://sumobi.com/shop/easy-digital-downloads-per-product-emails/
 Description: Custom purchase confirmation emails for your products
-Version: 1.0.7
+Version: 1.0.8
 Author: Andrew Munro, Sumobi
 Author URI: http://sumobi.com/
 */
@@ -32,7 +32,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.0.7';
+		private $version = '1.0.8';
 
 		/**
 		 * Plugin Title

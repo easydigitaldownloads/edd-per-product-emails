@@ -8,6 +8,9 @@ Custom purchase confirmation emails for your products
 
 == Changelog ==
 
+= 1.0.8 =
+* Fix: Special characters in subject line when using the {download_name} email tag were being converted to HTML
+
 = 1.0.7 =
 * Fix: Plugin became deactivated when EDD was updated
 
