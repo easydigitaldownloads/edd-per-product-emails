@@ -295,7 +295,7 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 */
 function edd_ppe_email_template_tags( $input, $product_id ) {
 
-	$download_name = get_the_title( $product_id );
+	$download_name = html_entity_decode( get_the_title( $product_id ), ENT_COMPAT, 'UTF-8' );
 
 	// used by subject line and body
 	$input = str_replace( '{download_name}', $download_name, $input );
@@ -317,8 +317,8 @@ function edd_ppe_email_template_tags( $input, $product_id ) {
 function edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ) {
 
 	// get the download's title from the '_edd_receipt_download' meta key which is listed against the receipt ID 
-	$download_name = get_the_title( get_post_meta( $receipt_id, '_edd_receipt_download', true ) );
-
+	$download_name = html_entity_decode( get_the_title( get_post_meta( $receipt_id, '_edd_receipt_download', true ) ), ENT_COMPAT, 'UTF-8' );
+	
 	$blog_name = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
 
 	$subject = str_replace( '{sitename}', $blog_name, $subject );
