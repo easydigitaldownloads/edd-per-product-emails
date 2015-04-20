@@ -23,7 +23,7 @@ function edd_ppe_add_receipt( $data ) {
 		$posted = array();
 
 		foreach ( $data as $key => $value ) {
-			
+
 			if ( $key != 'edd-receipt-nonce' && $key != 'edd-action' && $key != 'edd-receipt' ) {
 
 				if ( 'email' == $key )
@@ -36,10 +36,10 @@ function edd_ppe_add_receipt( $data ) {
 		}
 
 		if ( edd_ppe_store_receipt( $posted ) ) {
-			wp_redirect( add_query_arg( 'edd-message', 'receipt_added', $data['edd-receipt'] ) ); edd_die();
+			wp_safe_redirect( add_query_arg( 'edd-message', 'receipt_added', $data['edd-receipt'] ) ); edd_die();
 		} else {
-			wp_redirect( add_query_arg( 'edd-message', 'receipt_add_failed', $data['edd-receipt'] ) ); edd_die();
-		}		
+			wp_safe_redirect( add_query_arg( 'edd-message', 'receipt_add_failed', $data['edd-receipt'] ) ); edd_die();
+		}
 	}
 }
 add_action( 'edd_add_receipt', 'edd_ppe_add_receipt' );
@@ -71,9 +71,9 @@ function edd_ppe_edit_receipt( $data ) {
 		}
 
 		if ( edd_ppe_store_receipt( $receipt, $data['receipt-id'] ) ) {
-			wp_redirect( add_query_arg( 'edd-message', 'receipt_updated', $data['edd-receipt'] ) ); edd_die();
+			wp_safe_redirect( add_query_arg( 'edd-message', 'receipt_updated', $data['edd-receipt'] ) ); edd_die();
 		} else {
-			wp_redirect( add_query_arg( 'edd-message', 'receipt_update_failed', $data['edd-receipt'] ) ); edd_die();
+			wp_safe_redirect( add_query_arg( 'edd-message', 'receipt_update_failed', $data['edd-receipt'] ) ); edd_die();
 		}
 	}
 }
@@ -81,7 +81,7 @@ add_action( 'edd_edit_receipt', 'edd_ppe_edit_receipt' );
 
 
 /**
- * Listens for when a receipt delete button is clicked and deletes the receipt 
+ * Listens for when a receipt delete button is clicked and deletes the receipt
  *
  * @since 1.0
  * @param array $data Receipt data

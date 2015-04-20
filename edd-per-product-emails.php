@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - Per Product Emails
 Plugin URI: http://sumobi.com/shop/easy-digital-downloads-per-product-emails/
 Description: Custom purchase confirmation emails for your products
-Version: 1.0.8
+Version: 1.0.9
 Author: Andrew Munro, Sumobi
 Author URI: http://sumobi.com/
 */
@@ -32,7 +32,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.0.8';
+		private $version = '1.0.9';
 
 		/**
 		 * Plugin Title
@@ -232,10 +232,10 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 
 			if ( isset( $_GET['edd-action'] ) && $_GET['edd-action'] == 'edit_receipt' ) {
 				require_once $this->includes_dir . 'edit-receipt.php';
-			} 
+			}
 			elseif ( isset( $_GET['edd-action'] ) && $_GET['edd-action'] == 'add_receipt' ) {
 				require_once $this->includes_dir . 'add-receipt.php';
-			} 
+			}
 			else {
 				require_once $this->includes_dir . 'class-receipts-table.php';
 				$receipts_table = new EDD_Receipts_Table();
@@ -243,7 +243,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 			?>
 
 			<div class="wrap">
-				<h2><?php _e( 'Per Product Emails', 'edd-ppe' ); ?><a href="<?php echo add_query_arg( array( 'edd-action' => 'add_receipt', 'edd-message' => false ) ); ?>" class="add-new-h2"><?php _e( 'Add New', 'edd-ppe' ); ?></a></h2>
+				<h2><?php _e( 'Per Product Emails', 'edd-ppe' ); ?><a href="<?php echo esc_url( add_query_arg( array( 'edd-action' => 'add_receipt', 'edd-message' => false ) ) ); ?>" class="add-new-h2"><?php _e( 'Add New', 'edd-ppe' ); ?></a></h2>
 				<?php do_action( 'edd_receipts_page_top' ); ?>
 				<form id="edd-receipts-filter" method="get" action="<?php echo admin_url( 'edit.php?post_type=download&page=edd-receipts' ); ?>">
 					<?php $receipts_table->search_box( __( 'Search', 'edd-ppe' ), 'edd-receipts' ); ?>
@@ -266,7 +266,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 *
 		 * @since 1.0
 		*/
-		public function admin_css() { 
+		public function admin_css() {
 
 			global $pagenow, $typenow;
 
@@ -275,11 +275,11 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 				return;
 			?>
 			<style>.quicktags-toolbar input{width: auto;}</style>
-			<?php 
+			<?php
 		}
 
 	}
-	
+
 	/**
 	 * Loads a single instance
 	 *
@@ -307,7 +307,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 	        $activation = new EDD_Extension_Activation( plugin_dir_path( __FILE__ ), basename( __FILE__ ) );
 	        $activation = $activation->run();
 	        return EDD_Per_Product_Emails::get_instance();
-	        
+
 	    } else {
 	        return EDD_Per_Product_Emails::get_instance();
 	    }

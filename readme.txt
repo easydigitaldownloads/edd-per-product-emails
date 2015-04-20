@@ -7,6 +7,8 @@ Author URI: http://sumobi.com/
 Custom purchase confirmation emails for your products
 
 == Changelog ==
+= 1.0.9 =
+* FIX: XSS vulnerability in query args
 
 = 1.0.8 =
 * Fix: Special characters in subject line when using the {download_name} email tag were being converted to HTML
@@ -15,7 +17,7 @@ Custom purchase confirmation emails for your products
 * Fix: Plugin became deactivated when EDD was updated
 
 = 1.0.6 =
-* Fix: Added backwards compatibility for olders EDD versions that aren't using the new EDD email class 
+* Fix: Added backwards compatibility for olders EDD versions that aren't using the new EDD email class
 
 = 1.0.5 =
 * Fix: email tags not showing properly in custom emails
@@ -28,7 +30,7 @@ Custom purchase confirmation emails for your products
 * Tweak: Better handling of language files
 
 = 1.0.3 =
-* New: Custom emails are now sent when resending the purchase receipt from the Payment History 
+* New: Custom emails are now sent when resending the purchase receipt from the Payment History
 
 = 1.0.2 =
 * Fix: Bug with license key activation.

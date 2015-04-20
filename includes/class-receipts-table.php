@@ -121,9 +121,9 @@ class EDD_Receipts_Table extends WP_List_Table {
 		$inactive_count = '&nbsp;<span class="count">(' . $this->inactive_count  . ')</span>';
 
 		$views = array(
-			'all'		=> sprintf( '<a href="%s"%s>%s</a>', remove_query_arg( 'status', $base ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All', 'edd-ppe') . $total_count ),
-			'active'	=> sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'active', $base ), $current === 'active' ? ' class="current"' : '', __('Active', 'edd-ppe') . $active_count ),
-			'inactive'	=> sprintf( '<a href="%s"%s>%s</a>', add_query_arg( 'status', 'inactive', $base ), $current === 'inactive' ? ' class="current"' : '', __('Inactive', 'edd-ppe') . $inactive_count ),
+			'all'		=> sprintf( '<a href="%s"%s>%s</a>', esc_url( remove_query_arg( 'status', $base ) ), $current === 'all' || $current == '' ? ' class="current"' : '', __('All', 'edd-ppe') . $total_count ),
+			'active'	=> sprintf( '<a href="%s"%s>%s</a>', esc_url( add_query_arg( 'status', 'active', $base ) ), $current === 'active' ? ' class="current"' : '', __('Active', 'edd-ppe') . $active_count ),
+			'inactive'	=> sprintf( '<a href="%s"%s>%s</a>', esc_url( add_query_arg( 'status', 'inactive', $base ) ), $current === 'inactive' ? ' class="current"' : '', __('Inactive', 'edd-ppe') . $inactive_count ),
 		);
 
 		return $views;
@@ -193,15 +193,15 @@ class EDD_Receipts_Table extends WP_List_Table {
 		$base         = admin_url( 'edit.php?post_type=download&page=edd-receipts&edd-action=edit_receipt&receipt=' . $item['ID'] );
 		$row_actions  = array();
 
-		$row_actions['edit'] = '<a href="' . add_query_arg( array( 'edd-action' => 'edit_receipt', 'receipt' => $receipt->ID ) ) . '">' . __( 'Edit', 'edd-ppe' ) . '</a>';
+		$row_actions['edit'] = '<a href="' . esc_url( add_query_arg( array( 'edd-action' => 'edit_receipt', 'receipt' => $receipt->ID ) ) ) . '">' . __( 'Edit', 'edd-ppe' ) . '</a>';
 
 		if( strtolower( $item['status'] ) == 'active' )
-			$row_actions['deactivate'] = '<a href="' . add_query_arg( array( 'edd-action' => 'deactivate_receipt', 'receipt' => $receipt->ID, 'edd-message' => false ) ) . '">' . __( 'Deactivate', 'edd-ppe' ) . '</a>';
+			$row_actions['deactivate'] = '<a href="' . esc_url( add_query_arg( array( 'edd-action' => 'deactivate_receipt', 'receipt' => $receipt->ID, 'edd-message' => false ) ) ) . '">' . __( 'Deactivate', 'edd-ppe' ) . '</a>';
 		else
-			$row_actions['activate'] = '<a href="' . add_query_arg( array( 'edd-action' => 'activate_receipt', 'receipt' => $receipt->ID, 'edd-message' => false ) ) . '">' . __( 'Activate', 'edd-ppe' ) . '</a>';
+			$row_actions['activate'] = '<a href="' . esc_url( add_query_arg( array( 'edd-action' => 'activate_receipt', 'receipt' => $receipt->ID, 'edd-message' => false ) ) ) . '">' . __( 'Activate', 'edd-ppe' ) . '</a>';
 
 		$row_actions['test'] = '<a href="' . wp_nonce_url( add_query_arg( array( 'edd-action' => 'send_test_email', 'receipt' => $receipt->ID, 'edd-message' => false ) ), 'edd-ppe-test-email' ) . '">' . __( 'Send Test Email', 'edd-ppe' ) . '</a>';
-	
+
 		$row_actions['delete'] = '<a href="' . wp_nonce_url( add_query_arg( array( 'edd-action' => 'delete_receipt', 'receipt' => $receipt->ID, 'edd-message' => false ) ), 'edd_receipt_nonce' ) . '">' . __( 'Delete', 'edd-ppe' ) . '</a>';
 
 		$row_actions = apply_filters( 'edd_receipt_row_actions', $row_actions, $receipt );
@@ -327,7 +327,7 @@ class EDD_Receipts_Table extends WP_List_Table {
 
 				$receipt_data[] = array(
 					'ID' 			=> $receipt->ID,
-					'download'		=> '<a class="row-title" href="' . add_query_arg( array( 'edd-action' => 'edit_receipt', 'receipt' => $receipt->ID ) ) . '">' . $download .'</a>',
+					'download'		=> '<a class="row-title" href="' . esc_url( add_query_arg( array( 'edd-action' => 'edit_receipt', 'receipt' => $receipt->ID ) ) ) . '">' . $download .'</a>',
 					'status'		=> ucwords( $receipt->post_status ),
 				);
 
