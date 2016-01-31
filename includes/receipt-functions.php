@@ -29,7 +29,7 @@ function edd_ppe_get_receipts_download_ids() {
 
 		return $download_ids;
 	}
-	
+
 	return false;
 
 }
@@ -119,7 +119,7 @@ function edd_ppe_get_meta_values() {
     $meta_values = $wpdb->get_col( $wpdb->prepare( "
         SELECT pm.meta_value FROM {$wpdb->postmeta} pm
         LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-        WHERE pm.meta_key = '_edd_receipt_download' 
+        WHERE pm.meta_key = '_edd_receipt_download'
         AND ( p.post_status = 'active' OR p.post_status = 'inactive')
         AND p.post_type = '%s'
     ", 'edd_receipt' ) );
@@ -139,7 +139,7 @@ function edd_ppe_get_active_receipts() {
     $meta_values = $wpdb->get_col( $wpdb->prepare( "
         SELECT pm.meta_value FROM {$wpdb->postmeta} pm
         LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-        WHERE pm.meta_key = '_edd_receipt_download' 
+        WHERE pm.meta_key = '_edd_receipt_download'
         AND ( p.post_status = 'active')
         AND p.post_type = '%s'
     ", 'edd_receipt' ) );
@@ -169,12 +169,12 @@ function edd_ppe_store_receipt( $details, $receipt_id = null ) {
 
 		do_action( 'edd_pre_update_receipt', $details, $receipt_id );
 
-		wp_update_post( array(
+		$post = wp_update_post( array(
 			'ID'          => $receipt_id,
 			'post_title'  => get_the_title( $details['download'] ),
 			'post_status' => $details['status'],
-			'post_content' => isset( $details['email'] ) ? $details['email'] : '',
-			'post_excerpt' => isset( $details['subject'] ) ? $details['subject'] : '',
+			'post_content' => isset( $details['email'] ) ? wp_kses_post( $details['email'] ) : '',
+			'post_excerpt' => isset( $details['subject'] ) ? stripslashes( $details['subject'] ) : '',
 		) );
 
 		foreach( $meta as $key => $value ) {
@@ -199,7 +199,7 @@ function edd_ppe_store_receipt( $details, $receipt_id = null ) {
 			'post_title'  => isset( $details['download'] ) ? get_the_title( $details['download'] ) : '',
 			'post_status' => 'inactive', // set to inactive first so the user can test emails
 			'post_content' => isset( $details['email'] ) ? wp_kses_post( $details['email'] ) : '', // email content becomes post_content
-			'post_excerpt' => isset( $details['subject'] ) ? $details['subject'] : '',
+			'post_excerpt' => isset( $details['subject'] ) ? stripslashes( $details['subject'] ) : '',
 		) );
 
 		foreach( $meta as $key => $value ) {
@@ -230,7 +230,7 @@ function edd_ppe_remove_receipt( $receipt_id = 0 ) {
 	do_action( 'edd_post_delete_receipt', $receipt_id );
 }
 
-	
+
 /**
  * Updates a receipt's status from one status to another.
  *

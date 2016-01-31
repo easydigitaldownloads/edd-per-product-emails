@@ -26,7 +26,7 @@ $receipt     = edd_ppe_get_receipt( $receipt_id );
 					<label for="download"><?php printf( __( 'Select %s', 'edd-ppe' ), edd_get_label_singular() ); ?></label>
 				</th>
 				<td>
-					<?php 
+					<?php
 
 					// current download
 					$include = get_post_meta( $receipt_id, '_edd_receipt_download', true );
@@ -46,8 +46,8 @@ $receipt     = edd_ppe_get_receipt( $receipt_id );
 
 					<select name="download" id="download">
 
-						<?php if ( $products ) : ?> 
-						
+						<?php if ( $products ) : ?>
+
 						<option><?php printf( __( 'Select %s', 'edd-ppe' ), strtolower( edd_get_label_singular() ) ); ?></option>
 
 						<?php foreach ( $products as $product ) {
@@ -62,8 +62,8 @@ $receipt     = edd_ppe_get_receipt( $receipt_id );
 
 						<?php endif; ?>
 
-					</select>	
-					
+					</select>
+
 					<p class="description"><?php printf( __( 'Select the %s for this email', 'edd-ppe' ), strtolower( edd_get_label_singular() ) ); ?></p>
 				</td>
 			</tr>
@@ -72,7 +72,7 @@ $receipt     = edd_ppe_get_receipt( $receipt_id );
 					<label for="subject"><?php _e( 'Purchase Email Subject', 'edd-ppe' ); ?></label>
 				</th>
 				<td>
-					<p><input type="text" class="widefat" name="subject" id="subject" value="<?php echo esc_attr( $receipt->post_excerpt ); ?>" size="30" /></p>
+					<p><input type="text" class="widefat" name="subject" id="subject" value="<?php echo esc_attr( stripslashes( $receipt->post_excerpt ) ); ?>" size="30" /></p>
 					<p class="description"><?php printf( __( 'Enter the email subject line for this %s. Available tags {download_name}, {sitename}', 'edd-ppe' ), strtolower( edd_get_label_singular() ) ); ?></p>
 				</td>
 			</tr>
@@ -96,7 +96,7 @@ $receipt     = edd_ppe_get_receipt( $receipt_id );
 					<p class="description"><?php _e( 'The status of this email', 'edd-ppe' ); ?></p>
 				</td>
 			</tr>
-			
+
 		</tbody>
 	</table>
 
