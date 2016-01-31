@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function edd_ppe_add_settings( $settings ) {
 
   $edd_ppe_settings = array(
-  		
+
 		array(
 			'id' => 'edd_ppe_settings',
 			'name' => '<strong>' . __( 'Per Product Emails', 'edd-ppe' ) . '</strong>',
@@ -31,3 +31,12 @@ function edd_ppe_add_settings( $settings ) {
 
 }
 add_filter( 'edd_settings_extensions', 'edd_ppe_add_settings' );
+
+/**
+ * Capability type required to manage Per Product Emails
+ *
+ * @since 1.1
+ */
+function edd_ppe_capability_type() {
+    return apply_filters( 'edd_ppe_capability_type', 'manage_shop_settings' );
+}

@@ -220,7 +220,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		 * @since 1.0
 		*/
 		public function add_submenu_page() {
-			add_submenu_page( 'edit.php?post_type=download', __( 'Per Product Emails', 'edd-ppe' ), __( 'Per Product Emails', 'edd-ppe' ), 'manage_shop_settings', 'edd-receipts', array( $this, 'admin_page') );
+			add_submenu_page( 'edit.php?post_type=download', __( 'Per Product Emails', 'edd-ppe' ), __( 'Per Product Emails', 'edd-ppe' ), edd_ppe_capability_type(), 'edd-receipts', array( $this, 'admin_page') );
 		}
 
 		/**

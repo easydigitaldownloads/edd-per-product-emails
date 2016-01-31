@@ -33,7 +33,7 @@ function edd_ppe_setup_post_type() {
 		'query_var' 		=> false,
 		'rewrite' 			=> false,
 		'show_ui'           => false,
-		'capability_type' 	=> 'manage_shop_settings',
+		'capability_type' 	=> edd_ppe_capability_type(),
 		'map_meta_cap'      => true,
 		'supports' 			=> array( 'title' ),
 		'can_export'		=> true
