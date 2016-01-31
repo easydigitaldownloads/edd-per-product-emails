@@ -95,7 +95,7 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 
 			// run subject through the plugin's custom email tag function
 			// this runs before so apostrophe's can correctly be replaced when {sitename} is used in the subject. This will eventually be fixed in EDD core
-			$subject = edd_ppe_email_template_tags( $subject, $product_id );
+			$subject = edd_ppe_email_template_tags( $subject, $product_id, $payment_id );
 
 			// run subject through the standard EDD email tag function
 			$subject = edd_do_email_tags( $subject, $payment_id );
@@ -107,7 +107,7 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 			$message = apply_filters( 'edd_purchase_receipt', edd_do_email_tags( $message, $payment_id ), $payment_id, $payment_data );
 
 			// run the message through the plugin's custom email tag function
-			$message = edd_ppe_email_template_tags( $message, $product_id );
+			$message = edd_ppe_email_template_tags( $message, $product_id, $payment_id );
 
 			// add download name as email heading. Off by default
 			// will introduce a checkbox in admin to turn all headings on rather than turn them on now which may mess up emails
@@ -123,10 +123,10 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 			$subject = apply_filters( 'edd_ppe_purchase_subject', $receipt->post_excerpt ? wp_strip_all_tags( $receipt->post_excerpt, true ) : __( 'Purchase Receipt - {download_name}', 'edd-ppe' ), $payment_id );
 
 			$body = apply_filters( 'edd_ppe_purchase_body', $receipt->post_content ? $receipt->post_content : $default_email_body );
-			$body = edd_ppe_email_template_tags( $body, $product_id );
+			$body = edd_ppe_email_template_tags( $body, $product_id, $payment_id );
 
-			$subject = edd_email_template_tags( $subject, $payment_data, $payment_id );
-			$subject = edd_ppe_email_template_tags( $subject, $product_id );
+			$subject = edd_email_template_tags( $subject, $payment_data, $payment_id, $payment_id );
+			$subject = edd_ppe_email_template_tags( $subject, $product_id, $payment_id );
 
 			$message = edd_get_email_body_header();
 			$message .= apply_filters( 'edd_purchase_receipt', edd_email_template_tags( $body, $payment_data, $payment_id ), $payment_id, $payment_data );
@@ -293,17 +293,51 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
  *
  * @since 1.0
 */
-function edd_ppe_email_template_tags( $input, $product_id ) {
+function edd_ppe_email_template_tags( $input, $product_id, $payment_id ) {
 
+	$args = array(
+	    'post_type'	     => 'edd_license',
+	    'posts_per_page' => -1,
+	    'post_status'    => array( 'publish' ),
+	    'meta_key'       => '_edd_sl_payment_id',
+	    'meta_value'     => $payment_id
+	);
+
+	$license_posts = get_posts( $args );
+
+	if ( $license_posts ) {
+
+		$license_keys = array();
+
+		foreach ( $license_posts as $license ) {
+
+			// check the meta key/value pair against the current download ID
+			if ( get_post_meta( $license->ID, '_edd_sl_download_id', true ) == $product_id ) {
+				// if it's a match, store the license key into an array
+				$license_keys[] = get_post_meta( $license->ID, '_edd_sl_key', true );
+			}
+
+		}
+
+	}
+
+	// this string could potentially list more than 1 license key for the same download if quantities are used
+	$license_key = implode( ', ', $license_keys );
+
+	// download name
 	$download_name = html_entity_decode( get_the_title( $product_id ), ENT_COMPAT, 'UTF-8' );
 
 	// used by subject line and body
 	$input = str_replace( '{download_name}', $download_name, $input );
 
+	// blog name
 	$blog_name = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
 
 	// used by the subject line
 	$input = str_replace( '{sitename}', $blog_name, $input );
+
+	// used by the body
+	$input = str_replace( '{license_key}', $license_key, $input );
 
 	return $input;
 
@@ -350,5 +384,9 @@ add_filter( 'edd_email_preview_template_tags', 'edd_ppe_email_preview_template_t
  * @since 1.1
 */
 function edd_ppe_list_custom_email_tags() {
-	return '{download_name} - ' . sprintf( __( 'The %s name', 'edd-ppe'), strtolower( edd_get_label_singular() ) );
+
+	$tags = '{download_name} - ' . sprintf( __( 'The %s name', 'edd-ppe' ), strtolower( edd_get_label_singular() ) );
+	$tags .= '<br/>{license_key} - ' . sprintf( __( 'Show the license key for the %s', 'edd-ppe' ), strtolower( edd_get_label_singular() ) );
+
+	return $tags;
 }
