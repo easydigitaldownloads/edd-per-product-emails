@@ -22,18 +22,18 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				<td>
 					<?php
 					$excluded_products = edd_ppe_get_meta_values();
-					
+
 					$excluded_products = array_filter( $excluded_products );
-				
+
 					$products = get_posts( array( 'post_type' => 'download', 'exclude' => $excluded_products, 'nopaging' => true, 'orderby' => 'title', 'order' => 'ASC' ) ); ?>
 
 					<select name="download" id="download">
 
-						<?php if ( $products ) : ?> 
-						
+						<?php if ( $products ) : ?>
+
 						<option><?php printf( __( 'Select %s', 'edd-ppe' ), strtolower( edd_get_label_singular() ) ); ?></option>
 
-						<?php foreach ( $products as $product ) { 
+						<?php foreach ( $products as $product ) {
 						?>
 						<option value="<?php echo absint( $product->ID ); ?>"><?php echo esc_html( get_the_title( $product->ID ) ); ?></option>
 
@@ -45,8 +45,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 						<?php endif; ?>
 
-					</select>	
-					
+					</select>
+
 					<p class="description"><?php printf( __( 'Select the %s for this email', 'edd-ppe' ), strtolower( edd_get_label_singular() ) ); ?></p>
 				</td>
 			</tr>
@@ -66,10 +66,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<label for="email"><?php _e( 'Email', 'edd-ppe' ); ?></label>
 				</th>
 				<td>
-					<?php wp_editor( '', 'email' ); echo '<p>' . edd_get_purchase_receipt_template_tags() . '</p>'; ?>
+					<?php wp_editor( '', 'email' ); echo '<p>' . edd_get_emails_tags_list() . edd_ppe_list_custom_email_tags() . '</p>'; ?>
 				</td>
 			</tr>
-		
+
 		</tbody>
 	</table>
 	<?php do_action( 'edd_add_receipt_form_bottom' ); ?>

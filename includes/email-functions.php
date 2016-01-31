@@ -25,7 +25,7 @@ function edd_ppe_trigger_purchase_receipt( $payment_id ) {
 	// Send custom email
 	edd_ppe_email_custom_purchase_receipts( $payment_id );
 }
-add_action( 'edd_complete_purchase', 'edd_ppe_trigger_purchase_receipt', 999, 1 );	
+add_action( 'edd_complete_purchase', 'edd_ppe_trigger_purchase_receipt', 999, 1 );
 
 /**
  * Resend the custom Email Purchase Receipts. (This can be done from the Payment History page)
@@ -80,7 +80,7 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 		}
 
 		$receipt = get_post( edd_ppe_get_receipt_id( $product_id ) );
-		
+
 		// default email body
 		$default_email_body = __( "Dear", "edd-ppe" ) . " {name},\n\n";
 		$default_email_body .= __( "Thank you for purchasing {download_name}. Please click on the link(s) below to download your files.", "edd-ppe" ) . "\n\n";
@@ -92,7 +92,7 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 
 			// get our subject
 			$subject = apply_filters( 'edd_ppe_purchase_subject', $receipt->post_excerpt ? wp_strip_all_tags( $receipt->post_excerpt, true ) : __( 'Purchase Receipt - {download_name}', 'edd-ppe' ), $payment_id );
-			
+
 			// run subject through the plugin's custom email tag function
 			// this runs before so apostrophe's can correctly be replaced when {sitename} is used in the subject. This will eventually be fixed in EDD core
 			$subject = edd_ppe_email_template_tags( $subject, $product_id );
@@ -102,10 +102,10 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 
 			// message
 			$message = apply_filters( 'edd_ppe_purchase_body', $receipt->post_content ? $receipt->post_content : $default_email_body );
-			
+
 			// run our message through the standard EDD email tag function
 			$message = apply_filters( 'edd_purchase_receipt', edd_do_email_tags( $message, $payment_id ), $payment_id, $payment_data );
-			
+
 			// run the message through the plugin's custom email tag function
 			$message = edd_ppe_email_template_tags( $message, $product_id );
 
@@ -114,7 +114,7 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 			if ( apply_filters( 'edd_ppe_email_heading', false ) ) {
 				EDD()->emails->__set( 'heading', get_the_title( $product_id ) );
 			}
-			
+
 			// send an email for each custom email
 			EDD()->emails->send( $email, $subject, $message );
 
@@ -178,9 +178,9 @@ function edd_ppe_disable_purchase_receipt( $payment_id, $admin_notice = true ) {
 		if ( $admin_notice && ! edd_admin_notices_disabled( $payment_id ) ) {
 			do_action( 'edd_admin_sale_notice', $payment_id, $payment_data );
 		}
-		
+
 	}
-	
+
 }
 add_action( 'edd_complete_purchase', 'edd_ppe_disable_purchase_receipt', -999, 2 );
 
@@ -209,7 +209,7 @@ add_action( 'edd_send_test_email', 'edd_ppe_send_test_email' );
 
 /**
  * Send test email
- * 
+ *
  * @todo remove edd_email_preview_templage_tags() function check when EDD supports it
  * @since 1.0
 */
@@ -227,7 +227,7 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 	$default_email_body .= __( "Thank you for purchasing {download_name}. Please click on the link(s) below to download your files.", "edd-ppe" ) . "\n\n";
 	$default_email_body .= "{download_list}\n\n";
 	$default_email_body .= "{sitename}";
-	
+
 
 
 	// use new EDD 2.1 Email class
@@ -236,9 +236,9 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 		// we're on the main screen of edd receipts, get relevant subject and body for test email
 		if ( isset( $_GET['page'] ) && 'edd-receipts' == $_GET['page'] && 'download' == $typenow && in_array( $pagenow, array( 'edit.php' ) ) ) {
 			$subject = $receipt->post_excerpt ? $receipt->post_excerpt : $default_email_subject;
-			$body = $receipt->post_content ? $receipt->post_content : $default_email_body;	
+			$body = $receipt->post_content ? $receipt->post_content : $default_email_body;
 		}
-		
+
 		// run subject through email_preview_subject_template_tags() function
 		$subject = apply_filters( 'edd_ppe_purchase_receipt_subject', edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ), 0, array() );
 
@@ -252,18 +252,18 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 		// add download name as email heading. Off by default
 		// will introduce a checkbox in admin to turn all headings on rather than turn them on now which may mess up emails
 		if ( apply_filters( 'edd_ppe_email_heading', false ) ) {
-			EDD()->emails->__set( 'heading', get_the_title( $product_id ) );
+			EDD()->emails->__set( 'heading', get_the_title( $receipt->ID ) );
 		}
-		
+
 		EDD()->emails->send( edd_get_admin_notice_emails(), $subject, $message );
 
 	} else {
 		// we're on the main screen of edd receipts, get relevant subject and body for test email
 		if ( isset( $_GET['page'] ) && 'edd-receipts' == $_GET['page'] && 'download' == $typenow && in_array( $pagenow, array( 'edit.php' ) ) ) {
 			$subject = $receipt->post_excerpt ? $receipt->post_excerpt : $default_email_subject;
-			$body = $receipt->post_content ? $receipt->post_content : $default_email_body;	
+			$body = $receipt->post_content ? $receipt->post_content : $default_email_body;
 		}
-		
+
 		// run subject through email_preview_subject_template_tags() function
 		$subject = apply_filters( 'edd_ppe_purchase_receipt_subject', edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ), 0, array() );
 
@@ -316,9 +316,9 @@ function edd_ppe_email_template_tags( $input, $product_id ) {
 */
 function edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ) {
 
-	// get the download's title from the '_edd_receipt_download' meta key which is listed against the receipt ID 
+	// get the download's title from the '_edd_receipt_download' meta key which is listed against the receipt ID
 	$download_name = html_entity_decode( get_the_title( get_post_meta( $receipt_id, '_edd_receipt_download', true ) ), ENT_COMPAT, 'UTF-8' );
-	
+
 	$blog_name = wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES );
 
 	$subject = str_replace( '{sitename}', $blog_name, $subject );
@@ -326,7 +326,6 @@ function edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ) {
 
 	return apply_filters( 'edd_ppe_preview_subject_template_tags', $subject );
 }
-
 
 /**
  * Add {download_name} to the allowed preview template tags
@@ -336,7 +335,7 @@ function edd_ppe_email_preview_subject_template_tags( $subject, $receipt_id ) {
 function edd_ppe_email_preview_template_tags( $message ) {
 
 	$post_id = isset( $_GET['receipt'] ) ? $_GET['receipt'] : '';
-	
+
 	$download_name = get_the_title( $post_id );
 	$message = str_replace( '{download_name}', $download_name, $message );
 
@@ -345,15 +344,11 @@ function edd_ppe_email_preview_template_tags( $message ) {
 }
 add_filter( 'edd_email_preview_template_tags', 'edd_ppe_email_preview_template_tags' );
 
-
 /**
- * Add {download_name} to list of available tags
+ * List custom email tags
  *
- * @since 1.0
+ * @since 1.1
 */
-function edd_ppe_get_purchase_receipt_template_tags( $tags ) {
-	$tags .= '<br />' . '{download_name} - ' . sprintf( __( 'The %s name', 'edd-ppe'), strtolower( edd_get_label_singular() ) );
-
-	return $tags;
+function edd_ppe_list_custom_email_tags() {
+	return '{download_name} - ' . sprintf( __( 'The %s name', 'edd-ppe'), strtolower( edd_get_label_singular() ) );
 }
-add_filter( 'edd_purchase_receipt_template_tags_description', 'edd_ppe_get_purchase_receipt_template_tags' );

@@ -81,7 +81,7 @@ $receipt     = edd_ppe_get_receipt( $receipt_id );
 					<label for="email"><?php _e( 'Email', 'edd-ppe' ); ?></label>
 				</th>
 				<td>
-					<?php wp_editor( $receipt->post_content, 'email' ); echo '<p>' . edd_get_purchase_receipt_template_tags() . '</p>'; ?>
+					<?php wp_editor( $receipt->post_content, 'email' ); echo '<p>' . edd_get_emails_tags_list() . edd_ppe_list_custom_email_tags() . '</p>'; ?>
 				</td>
 			</tr>
 			<tr class="form-field">
