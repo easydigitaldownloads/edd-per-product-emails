@@ -289,40 +289,22 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 
 
 /**
- * Add {download_name} to the allowed subject template tags
+ * Add email tags
+ *
+ * {download_name}
+ * {sitename}
+ * {license_key}
  *
  * @since 1.0
 */
 function edd_ppe_email_template_tags( $input, $product_id, $payment_id ) {
 
-	$args = array(
-	    'post_type'	     => 'edd_license',
-	    'posts_per_page' => -1,
-	    'post_status'    => array( 'publish' ),
-	    'meta_key'       => '_edd_sl_payment_id',
-	    'meta_value'     => $payment_id
-	);
+	// get license key for the download
+	$license = edd_software_licensing()->get_license_by_purchase( $payment_id, $product_id );
 
-	$license_posts = get_posts( $args );
-
-	if ( $license_posts ) {
-
-		$license_keys = array();
-
-		foreach ( $license_posts as $license ) {
-
-			// check the meta key/value pair against the current download ID
-			if ( get_post_meta( $license->ID, '_edd_sl_download_id', true ) == $product_id ) {
-				// if it's a match, store the license key into an array
-				$license_keys[] = get_post_meta( $license->ID, '_edd_sl_key', true );
-			}
-
-		}
-
+	if ( $license ) {
+		$license_key = get_post_meta( $license->ID, '_edd_sl_key', true );
 	}
-
-	// this string could potentially list more than 1 license key for the same download if quantities are used
-	$license_key = implode( ', ', $license_keys );
 
 	// download name
 	$download_name = html_entity_decode( get_the_title( $product_id ), ENT_COMPAT, 'UTF-8' );
