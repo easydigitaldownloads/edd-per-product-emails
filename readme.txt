@@ -7,8 +7,14 @@ Author URI: http://sumobi.com/
 Custom purchase confirmation emails for your products
 
 == Changelog ==
+= 1.1.0 =
+* Fix: Apostrophes not displaying correctly in email subject
+* New: edd_ppe_capability_type filter to specify which capability can manage the emails
+* New: {license_key} email tag
+
+== Changelog ==
 = 1.0.9 =
-* FIX: XSS vulnerability in query args
+* Fix: XSS vulnerability in query args
 
 = 1.0.8 =
 * Fix: Special characters in subject line when using the {download_name} email tag were being converted to HTML
