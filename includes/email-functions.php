@@ -300,10 +300,14 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 function edd_ppe_email_template_tags( $input, $product_id, $payment_id ) {
 
 	// get license key for the download
-	$license = edd_software_licensing()->get_license_by_purchase( $payment_id, $product_id );
+	if( function_exists( 'edd_software_licensing' ) ) {
 
-	if ( $license ) {
-		$license_key = get_post_meta( $license->ID, '_edd_sl_key', true );
+		$license = edd_software_licensing()->get_license_by_purchase( $payment_id, $product_id );
+
+		if ( $license ) {
+			$license_key = get_post_meta( $license->ID, '_edd_sl_key', true );
+		}
+
 	}
 
 	// download name
