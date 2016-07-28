@@ -6,6 +6,7 @@ Description: Custom purchase confirmation emails for your products
 Version: 1.1.1
 Author: Andrew Munro, Sumobi
 Author URI: http://sumobi.com/
+Text Domain: edd-ppe
 */
 
 // Exit if accessed directly
