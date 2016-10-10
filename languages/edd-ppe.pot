@@ -1,0 +1,306 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Easy Digital Downloads - Per Product Emails\n"
+"POT-Creation-Date: 2016-07-28 15:16+0200\n"
+"PO-Revision-Date: 2016-07-28 15:15+0200\n"
+"Last-Translator: FX Bénard <fx@fxbenard.com>\n"
+"Language-Team: FX Bénard <fx@fxbenard.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: edd-per-product-emails.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: edd-per-product-emails.php:191
+msgid "Settings"
+msgstr ""
+
+#: edd-per-product-emails.php:209
+msgid "View more plugins for Easy Digital Downloads by Sumobi"
+msgstr ""
+
+#: edd-per-product-emails.php:209
+msgid "Author's EDD plugins"
+msgstr ""
+
+#: edd-per-product-emails.php:224 edd-per-product-emails.php:247
+#: includes/admin-settings.php:17
+msgid "Per Product Emails"
+msgstr ""
+
+#: edd-per-product-emails.php:247 includes/post-types.php:17
+msgid "Add New"
+msgstr ""
+
+#: edd-per-product-emails.php:250
+msgid "Search"
+msgstr ""
+
+#: includes/add-receipt.php:12 includes/post-types.php:18
+msgid "Add New Email"
+msgstr ""
+
+#: includes/add-receipt.php:12 includes/edit-receipt.php:19
+msgid "Go Back"
+msgstr ""
+
+#: includes/add-receipt.php:20 includes/add-receipt.php:34
+#: includes/edit-receipt.php:26 includes/edit-receipt.php:51
+#, php-format
+msgid "Select %s"
+msgstr ""
+
+#: includes/add-receipt.php:44 includes/edit-receipt.php:61
+#, php-format
+msgid "No %s found"
+msgstr ""
+
+#: includes/add-receipt.php:50 includes/edit-receipt.php:67
+#, php-format
+msgid "Select the %s for this email"
+msgstr ""
+
+#: includes/add-receipt.php:56 includes/edit-receipt.php:72
+msgid "Purchase Email Subject"
+msgstr ""
+
+#: includes/add-receipt.php:60 includes/edit-receipt.php:76
+#, php-format
+msgid ""
+"Enter the email subject line for this %s. Available tags {download_name}, "
+"{sitename}"
+msgstr ""
+
+#: includes/add-receipt.php:66 includes/edit-receipt.php:81
+msgid "Email"
+msgstr ""
+
+#: includes/add-receipt.php:80
+msgid "Add Email"
+msgstr ""
+
+#: includes/admin-notices.php:15
+msgid "Email added."
+msgstr ""
+
+#: includes/admin-notices.php:19
+msgid "There was a problem adding your email, please try again."
+msgstr ""
+
+#: includes/admin-notices.php:23
+msgid "Email updated."
+msgstr ""
+
+#: includes/admin-notices.php:27
+msgid "There was a problem updating your email, please try again."
+msgstr ""
+
+#: includes/admin-notices.php:31
+msgid "Test Email Sent."
+msgstr ""
+
+#: includes/admin-notices.php:35
+msgid "Email deleted."
+msgstr ""
+
+#: includes/admin-notices.php:39
+msgid "Email activated."
+msgstr ""
+
+#: includes/admin-notices.php:43
+msgid "Email deactivated."
+msgstr ""
+
+#: includes/admin-settings.php:18
+msgid "Configure EDD Per Product Email Settings"
+msgstr ""
+
+#: includes/admin-settings.php:23
+msgid "Disable Standard Purchase Receipt"
+msgstr ""
+
+#: includes/admin-settings.php:24
+#, php-format
+msgid ""
+"Prevent the standard purchase receipt from being sent to the customer. The "
+"customer will still receive the standard purchase receipt if there are %s "
+"purchased that do not have custom emails configured."
+msgstr ""
+
+#: includes/class-activation.php:47
+msgid "This plugin"
+msgstr ""
+
+#: includes/class-activation.php:81
+#, php-format
+msgid " requires %sEasy Digital Downloads%s. Please activate it to continue."
+msgstr ""
+
+#: includes/class-activation.php:83
+#, php-format
+msgid " requires %sEasy Digital Downloads%s. Please install it to continue."
+msgstr ""
+
+#: includes/class-receipts-table.php:124
+msgid "All"
+msgstr ""
+
+#: includes/class-receipts-table.php:125 includes/edit-receipt.php:93
+msgid "Active"
+msgstr ""
+
+#: includes/class-receipts-table.php:126 includes/edit-receipt.php:94
+msgid "Inactive"
+msgstr ""
+
+#: includes/class-receipts-table.php:142
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: includes/class-receipts-table.php:143 includes/edit-receipt.php:89
+msgid "Status"
+msgstr ""
+
+#: includes/class-receipts-table.php:196
+msgid "Edit"
+msgstr ""
+
+#: includes/class-receipts-table.php:199
+msgid "Deactivate"
+msgstr ""
+
+#: includes/class-receipts-table.php:201
+msgid "Activate"
+msgstr ""
+
+#: includes/class-receipts-table.php:203
+msgid "Send Test Email"
+msgstr ""
+
+#: includes/class-receipts-table.php:205 includes/class-receipts-table.php:237
+msgid "Delete"
+msgstr ""
+
+#: includes/class-receipts-table.php:250
+msgid "No emails found."
+msgstr ""
+
+#: includes/edit-receipt.php:12
+msgid "Something went wrong."
+msgstr ""
+
+#: includes/edit-receipt.php:12 includes/receipt-actions.php:94
+msgid "Error"
+msgstr ""
+
+#: includes/edit-receipt.php:19 includes/post-types.php:19
+msgid "Edit Email"
+msgstr ""
+
+#: includes/edit-receipt.php:96
+msgid "The status of this email"
+msgstr ""
+
+#: includes/edit-receipt.php:110
+msgid "Update Email"
+msgstr ""
+
+#: includes/email-functions.php:85 includes/email-functions.php:226
+msgid "Dear"
+msgstr ""
+
+#: includes/email-functions.php:86 includes/email-functions.php:227
+msgid ""
+"Thank you for purchasing {download_name}. Please click on the link(s) below "
+"to download your files."
+msgstr ""
+
+#: includes/email-functions.php:94 includes/email-functions.php:123
+msgid "Purchase Receipt - {download_name}"
+msgstr ""
+
+#: includes/email-functions.php:223
+msgid "Thanks for purchasing {download_name}"
+msgstr ""
+
+#: includes/email-functions.php:374
+#, php-format
+msgid "The %s name"
+msgstr ""
+
+#: includes/email-functions.php:375
+#, php-format
+msgid "Show the license key for the %s"
+msgstr ""
+
+#: includes/post-types.php:15
+msgctxt "post type general name"
+msgid "Emails"
+msgstr ""
+
+#: includes/post-types.php:16
+msgctxt "post type singular name"
+msgid "Email"
+msgstr ""
+
+#: includes/post-types.php:20
+msgid "New Email"
+msgstr ""
+
+#: includes/post-types.php:21
+msgid "All Emails"
+msgstr ""
+
+#: includes/post-types.php:22
+msgid "View Email"
+msgstr ""
+
+#: includes/post-types.php:23
+msgid "Search Emails"
+msgstr ""
+
+#: includes/post-types.php:24
+msgid "No Emails found"
+msgstr ""
+
+#: includes/post-types.php:25
+msgid "No Emails found in Trash"
+msgstr ""
+
+#: includes/post-types.php:27
+msgid "Emails"
+msgstr ""
+
+#: includes/receipt-actions.php:94
+msgid "Trying to cheat or something?"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Easy Digital Downloads - Per Product Emails"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://sumobi.com/shop/easy-digital-downloads-per-product-emails/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Custom purchase confirmation emails for your products"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Andrew Munro, Sumobi"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://sumobi.com/"
+msgstr ""
