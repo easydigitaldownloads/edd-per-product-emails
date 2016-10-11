@@ -7,6 +7,9 @@ Author URI: http://sumobi.com/
 Custom purchase confirmation emails for your products
 
 == Changelog ==
+= 1.1.2 =
+* Fix: Email formatting not properly preserved when saving.
+
 = 1.1.0 =
 * Fix: Apostrophes not displaying correctly in email subject
 * New: edd_ppe_capability_type filter to specify which capability can manage the emails
