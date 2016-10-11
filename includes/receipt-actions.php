@@ -26,12 +26,13 @@ function edd_ppe_add_receipt( $data ) {
 
 			if ( $key != 'edd-receipt-nonce' && $key != 'edd-action' && $key != 'edd-receipt' ) {
 
-				if ( 'email' == $key )
+				if ( 'email' == $key ) {
 					$posted[ $key ] = $value;
-				elseif ( is_string( $value ) || is_int( $value ) )
-					$posted[ $key ] = strip_tags( addslashes( $value ) );
-				elseif ( is_array( $value ) )
+				} elseif ( is_string( $value ) || is_int( $value ) ) {
+					$posted[ $key ] = edd_sanitize_text_field( $value );
+				} elseif ( is_array( $value ) ) {
 					$posted[ $key ] = array_map( 'absint', $value );
+				}
 			}
 		}
 
@@ -61,12 +62,13 @@ function edd_ppe_edit_receipt( $data ) {
 
 			if ( $key != 'edd-receipt-nonce' && $key != 'edd-action' && $key != 'receipt-id' && $key != 'edd-receipt' ) {
 
-				if ( 'email' == $key )
+				if ( 'email' == $key ) {
 					$receipt[ $key ] = $value;
-				elseif ( is_string( $value ) || is_int( $value ) )
-					$receipt[ $key ] = strip_tags( addslashes( $value ) );
-				elseif ( is_array( $value ) )
+				} elseif ( is_string( $value ) || is_int( $value ) ) {
+					$receipt[ $key ] = edd_sanitize_text_field( $value );
+				} elseif ( is_array( $value ) ) {
 					$receipt[ $key ] = array_map( 'absint', $value );
+				}
 			}
 		}
 
