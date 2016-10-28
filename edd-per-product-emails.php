@@ -41,9 +41,9 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		public $title = 'EDD Per Product Emails';
 
 		/**
-	    * @var EDD_PPE_Software_Licensing
-	    */
-	    public static $edd_software_licensing;
+		* @var EDD_PPE_Software_Licensing
+		*/
+		public static $edd_software_licensing;
 
 		/**
 		 * Main Instance
@@ -64,7 +64,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 				self::$instance->load_textdomain();
 
 				// Set up integrations
-		        self::$edd_software_licensing = new EDD_PPE_Software_Licensing();
+				self::$edd_software_licensing = new EDD_PPE_Software_Licensing();
 			}
 
 			return self::$instance;
@@ -178,7 +178,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 
 			//Include Integration files
 			require( $this->includes_dir . 'integrations/plugin-software-licenses.php' );
-			
+
 			do_action( 'edd_ppe_include_files' );
 
 			if ( ! is_admin() )
