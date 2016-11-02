@@ -299,17 +299,6 @@ function edd_ppe_test_purchase_receipt( $receipt_id = 0 ) {
 */
 function edd_ppe_email_template_tags( $input, $product_id, $payment_id ) {
 
-	// get license key for the download
-	if( function_exists( 'edd_software_licensing' ) ) {
-
-		$license = edd_software_licensing()->get_license_by_purchase( $payment_id, $product_id );
-
-		if ( $license ) {
-			$license_key = get_post_meta( $license->ID, '_edd_sl_key', true );
-		}
-
-	}
-
 	// download name
 	$download_name = html_entity_decode( get_the_title( $product_id ), ENT_COMPAT, 'UTF-8' );
 
@@ -322,10 +311,7 @@ function edd_ppe_email_template_tags( $input, $product_id, $payment_id ) {
 	// used by the subject line
 	$input = str_replace( '{sitename}', $blog_name, $input );
 
-	// used by the body
-	$input = str_replace( '{license_key}', $license_key, $input );
-
-	return $input;
+	return apply_filters( 'edd_ppe_email_template_tags', $input, $product_id, $payment_id );
 
 }
 
@@ -372,7 +358,6 @@ add_filter( 'edd_email_preview_template_tags', 'edd_ppe_email_preview_template_t
 function edd_ppe_list_custom_email_tags() {
 
 	$tags = '{download_name} - ' . sprintf( __( 'The %s name', 'edd-ppe' ), strtolower( edd_get_label_singular() ) );
-	$tags .= '<br/>{license_key} - ' . sprintf( __( 'Show the license key for the %s', 'edd-ppe' ), strtolower( edd_get_label_singular() ) );
 
-	return $tags;
+	return apply_filters( 'edd_ppe_list_custom_email_tags', $tags );
 }
