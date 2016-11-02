@@ -7,6 +7,9 @@ Author URI: http://sumobi.com/
 Custom purchase confirmation emails for your products
 
 == Changelog ==
+= 1.1.3 =
+* Fix: There were errors if Software Licensing was not active. Here all SL functions are moved to an integration folder with a check to make sure it is active.
+
 = 1.1.2 =
 * Fix: Email formatting not properly preserved when saving.
 
