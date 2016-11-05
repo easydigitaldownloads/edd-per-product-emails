@@ -117,6 +117,9 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 
 			// send an email for each custom email
 			EDD()->emails->send( $email, $subject, $message );
+			
+			// Prevent multiple emails in case of variable pricing @dipakcg
+			if( edd_has_variable_prices( $product_id ) ) { break; }
 
 		} else {
 			// support older EDD versions where the EDD Email Class does not exist
