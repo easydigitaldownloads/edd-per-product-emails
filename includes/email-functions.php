@@ -72,7 +72,10 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 	foreach ( $cart_items as $product ) {
 		$product_ids[] = $product['id'];
 	}
-
+	
+	// get unique product IDs only (to prevent multiple emails in case of variable pricing)
+	$product_ids = array_unique($product_ids);
+	
 	foreach ( $product_ids as $product_id ) {
 
 		if ( ! edd_ppe_is_receipt_active( edd_ppe_get_receipt_id( $product_id ) ) ) {
@@ -146,11 +149,6 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 
 			wp_mail( $email, $subject, $message, $headers, $attachments );
 
-		}
-		
-		// prevents multiple emails in case of variable pricing
-		if( edd_has_variable_prices( $product_id ) ) {
-			break;
 		}
 
 	}
