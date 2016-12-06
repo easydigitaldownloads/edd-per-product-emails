@@ -72,7 +72,10 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 	foreach ( $cart_items as $product ) {
 		$product_ids[] = $product['id'];
 	}
-
+	
+	// get unique product IDs only (to prevent multiple emails in case of variable pricing)
+	$product_ids = array_unique($product_ids);
+	
 	foreach ( $product_ids as $product_id ) {
 
 		if ( ! edd_ppe_is_receipt_active( edd_ppe_get_receipt_id( $product_id ) ) ) {
