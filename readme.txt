@@ -1,12 +1,16 @@
 === Easy Digital Downloads - Per Product Emails ===
 
-Plugin URI: http://sumobi.com/shop/easy-digital-downloads-per-product-emails/
-Author: Andrew Munro, Sumobi
-Author URI: http://sumobi.com/
+Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
+Author: Easy Digital Downloads
+Author URI: https://easydigitaldownloads.com
 
 Custom purchase confirmation emails for your products
 
 == Changelog ==
+
+= 1.1.4 =
+* Fix: Custom emails are no longer sent more than once when multi-option purchase mode is enabled and more than one option is purchased.
+
 = 1.1.3 =
 * Fix: There were errors if Software Licensing was not active. Here all SL functions are moved to an integration folder with a check to make sure it is active.
 
