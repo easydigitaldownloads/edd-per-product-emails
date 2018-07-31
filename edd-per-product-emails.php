@@ -35,7 +35,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.1.4';
+		private $version = '1.1.5';
 
 		/**
 		 * Plugin Title
