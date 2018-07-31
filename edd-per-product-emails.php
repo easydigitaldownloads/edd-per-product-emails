@@ -1,11 +1,13 @@
 <?php
 /*
 Plugin Name: Easy Digital Downloads - Per Product Emails
-Plugin URI: http://sumobi.com/shop/easy-digital-downloads-per-product-emails/
+Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
 Description: Custom purchase confirmation emails for your products
 Version: 1.1.5
-Author: Andrew Munro, Sumobi
-Author URI: http://sumobi.com/
+Author: Easy Digital Downloads
+Author URI: https://easydigitaldownloads.com
+License: GPL-2.0+
+License URI: http://www.opensource.org/licenses/gpl-license.php
 Text Domain: edd-ppe
 */
 
@@ -33,7 +35,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.1.3';
+		private $version = '1.1.4';
 
 		/**
 		 * Plugin Title

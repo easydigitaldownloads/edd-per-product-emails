@@ -1,8 +1,8 @@
 === Easy Digital Downloads - Per Product Emails ===
 
-Plugin URI: http://sumobi.com/shop/easy-digital-downloads-per-product-emails/
-Author: Andrew Munro, Sumobi
-Author URI: http://sumobi.com/
+Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
+Author: Easy Digital Downloads
+Author URI: https://easydigitaldownloads.com
 
 Custom purchase confirmation emails for your products
 
