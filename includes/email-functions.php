@@ -38,7 +38,7 @@ function edd_ppe_resend_custom_purchase_receipts( $data ) {
 	$purchase_id = $data['purchase_id'];
 	edd_ppe_email_custom_purchase_receipts( $purchase_id, false ); // doesn't send admin email
 	
-	// Disable standard purchase receipt.
+	// Disable standard purchase receipt
 	remove_action( 'edd_email_links', 'edd_resend_purchase_receipt' );
 }
 add_action( 'edd_email_links', 'edd_ppe_resend_custom_purchase_receipts', 9 );
