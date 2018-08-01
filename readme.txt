@@ -8,9 +8,6 @@ Custom purchase confirmation emails for your products
 
 == Changelog ==
 
-= 1.1.5 =
-* Fix: Prevent standard purchase receipt from being sent when resending purchase receipt from Payment History page.
-
 = 1.1.4 =
 * Fix: Custom emails are no longer sent more than once when multi-option purchase mode is enabled and more than one option is purchased.
 
