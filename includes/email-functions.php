@@ -35,8 +35,29 @@ add_action( 'edd_complete_purchase', 'edd_ppe_trigger_purchase_receipt', 999, 1 
  * @return void
  */
 function edd_ppe_resend_custom_purchase_receipts( $data ) {
-	$purchase_id = $data['purchase_id'];
-	edd_ppe_email_custom_purchase_receipts( $purchase_id, false ); // doesn't send admin email
+    global $edd_options;
+    
+	$purchase_id  = $data['purchase_id'];
+
+    // get cart items from purchase ID
+	$cart_items = edd_get_payment_meta_cart_details( $purchase_id );
+
+	// loop through each item in cart and add IDs to $product_id array
+	foreach ( $cart_items as $product ) {
+		$product_ids[] = $product['id'];
+	}
+	
+	// make sure all of the downloads purchase exist as receipts
+	if ( isset( $edd_options[ 'edd_ppe_disable_purchase_receipt' ] ) && count( array_intersect( $product_ids, edd_ppe_get_active_receipts() ) ) === count( $product_ids ) ) {
+
+		// Disable standard purchase receipt
+        remove_action( 'edd_email_links', 'edd_resend_purchase_receipt' );
+
+	}
+	
+    // send the custom email. This will not send admin email
+	edd_ppe_email_custom_purchase_receipts( $purchase_id, false );
+
 }
 add_action( 'edd_email_links', 'edd_ppe_resend_custom_purchase_receipts', 9 );
 
@@ -75,7 +96,7 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 	
 	// get unique product IDs only (to prevent multiple emails in case of variable pricing)
 	$product_ids = array_unique($product_ids);
-	
+  
 	foreach ( $product_ids as $product_id ) {
 
 		if ( ! edd_ppe_is_receipt_active( edd_ppe_get_receipt_id( $product_id ) ) ) {
