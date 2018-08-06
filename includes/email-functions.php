@@ -35,11 +35,11 @@ add_action( 'edd_complete_purchase', 'edd_ppe_trigger_purchase_receipt', 999, 1 
  * @return void
  */
 function edd_ppe_resend_custom_purchase_receipts( $data ) {
-    global $edd_options;
-    
+	global $edd_options;
+
 	$purchase_id  = $data['purchase_id'];
 
-    // get cart items from purchase ID
+	// get cart items from purchase ID
 	$cart_items = edd_get_payment_meta_cart_details( $purchase_id );
 
 	// loop through each item in cart and add IDs to $product_id array
@@ -51,11 +51,11 @@ function edd_ppe_resend_custom_purchase_receipts( $data ) {
 	if ( isset( $edd_options[ 'edd_ppe_disable_purchase_receipt' ] ) && count( array_intersect( $product_ids, edd_ppe_get_active_receipts() ) ) === count( $product_ids ) ) {
 
 		// Disable standard purchase receipt
-        remove_action( 'edd_email_links', 'edd_resend_purchase_receipt' );
+		remove_action( 'edd_email_links', 'edd_resend_purchase_receipt' );
 
 	}
-	
-    // send the custom email. This will not send admin email
+
+	// send the custom email. This will not send admin email
 	edd_ppe_email_custom_purchase_receipts( $purchase_id, false );
 
 }
