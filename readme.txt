@@ -8,6 +8,9 @@ Custom purchase confirmation emails for your products
 
 == Changelog ==
 
+= 1.1.5 =
+* Fix: Honor 'Disable Standard Purchase Receipt' setting when resending purchase receipts.
+
 = 1.1.4 =
 * Fix: Custom emails are no longer sent more than once when multi-option purchase mode is enabled and more than one option is purchased.
 

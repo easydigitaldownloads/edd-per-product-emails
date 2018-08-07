@@ -3,7 +3,7 @@
 Plugin Name: Easy Digital Downloads - Per Product Emails
 Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
 Description: Custom purchase confirmation emails for your products
-Version: 1.1.4
+Version: 1.1.5
 Author: Easy Digital Downloads
 Author URI: https://easydigitaldownloads.com
 License: GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		/**
 		 * Plugin Version
 		 */
-		private $version = '1.1.4';
+		private $version = '1.1.5';
 
 		/**
 		 * Plugin Title
