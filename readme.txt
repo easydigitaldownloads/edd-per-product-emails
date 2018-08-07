@@ -25,7 +25,6 @@ Custom purchase confirmation emails for your products
 * New: edd_ppe_capability_type filter to specify which capability can manage the emails
 * New: {license_key} email tag
 
-== Changelog ==
 = 1.0.9 =
 * Fix: XSS vulnerability in query args
 
