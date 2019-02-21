@@ -139,8 +139,10 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 				EDD()->emails->__set( 'heading', get_the_title( $product_id ) );
 			}
 
+			$attachments = apply_filters( 'edd_receipt_attachments', array(), $payment_id, $payment_data );
+
 			// send an email for each custom email
-			EDD()->emails->send( $email, $subject, $message );
+			EDD()->emails->send( $email, $subject, $message, $attachments );
 
 		} else {
 			// support older EDD versions where the EDD Email Class does not exist
