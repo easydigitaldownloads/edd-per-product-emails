@@ -8,6 +8,10 @@ Custom purchase confirmation emails for your products
 
 == Changelog ==
 
+= 1.1.6 =
+* Fix: Prevent a PHP error when no product IDs that need custom emails are found.
+* Fix: Allow attachments to be included when the EDD_Emails class is used.
+
 = 1.1.5 =
 * Fix: Honor 'Disable Standard Purchase Receipt' setting when resending purchase receipts.
 
