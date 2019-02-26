@@ -87,20 +87,21 @@ function edd_ppe_email_custom_purchase_receipts( $payment_id, $admin_notice = tr
 	}
 
 	// get cart items from payment ID
-	$cart_items = edd_get_payment_meta_cart_details( $payment_id );
+	$cart_items  = edd_get_payment_meta_cart_details( $payment_id );
+	$product_ids = array();
 
 	// loop through each item in cart and add IDs to $product_id array
 	foreach ( $cart_items as $product ) {
 		$product_ids[] = $product['id'];
 	}
-	
+
 	// get unique product IDs only (to prevent multiple emails in case of variable pricing)
-	$product_ids = array_unique($product_ids);
+	$product_ids = array_unique( $product_ids );
   
 	foreach ( $product_ids as $product_id ) {
 
 		if ( ! edd_ppe_is_receipt_active( edd_ppe_get_receipt_id( $product_id ) ) ) {
-		 	continue;
+			continue;
 		}
 
 		$receipt = get_post( edd_ppe_get_receipt_id( $product_id ) );
