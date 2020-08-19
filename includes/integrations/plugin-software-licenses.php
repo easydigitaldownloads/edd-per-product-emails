@@ -62,7 +62,7 @@ class EDD_PPE_Software_Licensing {
 		$license = edd_software_licensing()->get_license_by_purchase( $payment_id, $product_id );
 
 		if ( $license ) {
-			$license_key = get_post_meta( $license->ID, '_edd_sl_key', true );
+			$license_key = $license->license_key;
 		}else{
 			$license_key = __( 'No License Key found.', 'edd-ppe' );
 		}
