@@ -4,13 +4,28 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Add settings section
+ *
+ * @since       1.1.8
+ * @param       array $sections The existing extensions sections
+ * @return      array The modified extensions settings
+ */
+function edd_ppe_add_settings_section( $sections ) {
+	$sections['ppe-emails'] = __( 'Per Product Emails', 'edd-ppe' );
+
+	return $sections;
+}
+add_filter( 'edd_settings_sections_extensions', 'edd_ppe_add_settings_section' );
+
+
+/**
  * Adds the settings to the Misc section
  *
  * @since 1.0
 */
 function edd_ppe_add_settings( $settings ) {
 
-  $edd_ppe_settings = array(
+  $edd_ppe_settings['ppe-emails'] = array(
 
 		array(
 			'id' => 'edd_ppe_settings',
