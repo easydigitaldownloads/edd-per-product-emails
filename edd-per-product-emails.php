@@ -1,14 +1,14 @@
 <?php
 /**
-Plugin Name: Easy Digital Downloads - Per Product Emails
-Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
-Description: Custom purchase confirmation emails for your products
-Version: 1.1.7
-Author: Sandhills Development, LLC
-Author URI: https://sandhillsdev.com/
-License: GPL-2.0+
-License URI: http://www.opensource.org/licenses/gpl-license.php
-Text Domain: edd-ppe
+ *Plugin Name: Easy Digital Downloads - Per Product Emails
+ *Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
+ *Description: Custom purchase confirmation emails for your products
+ *Version: 1.1.7
+ *Author: Sandhills Development, LLC
+ *Author URI: https://sandhillsdev.com/
+ *License: GPL-2.0+
+ *License URI: http://www.opensource.org/licenses/gpl-license.php
+ *Text Domain: edd-ppe
 */
 
 // Exit if accessed directly
