@@ -1,14 +1,14 @@
 <?php
 /**
-Plugin Name: Easy Digital Downloads - Per Product Emails
-Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
-Description: Custom purchase confirmation emails for your products
-Version: 1.1.7
-Author: Easy Digital Downloads
-Author URI: https://easydigitaldownloads.com
-License: GPL-2.0+
-License URI: http://www.opensource.org/licenses/gpl-license.php
-Text Domain: edd-ppe
+ *Plugin Name: Easy Digital Downloads - Per Product Emails
+ *Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
+ *Description: Custom purchase confirmation emails for your products
+ *Version: 1.1.7
+ *Author: Sandhills Development, LLC
+ *Author URI: https://sandhillsdev.com/
+ *License: GPL-2.0+
+ *License URI: http://www.opensource.org/licenses/gpl-license.php
+ *Text Domain: edd-ppe
 */
 
 // Exit if accessed directly
@@ -115,7 +115,6 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 			add_action( 'admin_menu', array( $this, 'add_submenu_page'), 10 );
 			add_action( 'admin_print_styles', array( $this, 'admin_css'), 100 );
 
-			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta' ), 10, 2 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'settings_link' ), 10, 2 );
 
 			do_action( 'edd_ppe_setup_actions' );
@@ -129,7 +128,7 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		private function licensing() {
 			// check if EDD_License class exists
 			if ( class_exists( 'EDD_License' ) ) {
-				$license = new EDD_License( __FILE__, 'Per Product Emails', $this->version, 'Andrew Munro' );
+				$license = new EDD_License( __FILE__, 'Per Product Emails', $this->version, 'Sandhills Development, LLC', null, null, 90781 );
 			}
 		}
 
@@ -201,31 +200,10 @@ if ( ! class_exists( 'EDD_Per_Product_Emails' ) ) {
 		*/
 		public function settings_link( $links ) {
 			$plugin_links = array(
-				'<a href="' . admin_url( 'edit.php?post_type=download&page=edd-settings&tab=extensions' ) . '">' . __( 'Settings', 'edd-ppe' ) . '</a>',
+				'<a href="' . admin_url( 'edit.php?post_type=download&page=edd-settings&tab=extensions&section=ppe-emails' ) . '">' . __( 'Settings', 'edd-ppe' ) . '</a>',
 			);
 
 			return array_merge( $plugin_links, $links );
-		}
-
-		/**
-		 * Modify plugin metalinks
-		 *
-		 * @access      public
-		 * @since       1.0.3
-		 * @param       array $links The current links array
-		 * @param       string $file A specific plugin table entry
-		 * @return      array $links The modified links array
-		 */
-		public function plugin_meta( $links, $file ) {
-		    if ( $file == plugin_basename( __FILE__ ) ) {
-		        $plugins_link = array(
-		            '<a title="'. __( 'View more plugins for Easy Digital Downloads by Sumobi', 'edd-ppe' ) .'" href="https://easydigitaldownloads.com/blog/author/andrewmunro/?ref=166" target="_blank">' . __( 'Author\'s EDD plugins', 'edd-ppe' ) . '</a>'
-		        );
-
-		        $links = array_merge( $links, $plugins_link );
-		    }
-
-		    return $links;
 		}
 
 		/**

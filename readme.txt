@@ -1,8 +1,8 @@
 === Easy Digital Downloads - Per Product Emails ===
 
 Plugin URI: https://easydigitaldownloads.com/downloads/per-product-emails/
-Author: Easy Digital Downloads
-Author URI: https://easydigitaldownloads.com
+Author: Easy Sandhills Development, LLC
+Author URI: https://sandhillsdev.com/
 
 Custom purchase confirmation emails for your products
 
